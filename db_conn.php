@@ -1,5 +1,15 @@
-<?php 
-$user = $_GET['id_user'];
+<?php
+$host = 'localhost';
+$dbname = 'utslec';
+$username = 'root'; 
+$password = ''; 
 
-$dsn = "mysql:host=localhost;dbname=utslec";
-$kunci = new PDO($dsn, "root", "");
+try {
+    $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);    
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);    
+} catch (PDOException $e) {
+    echo "Database connection failed: " . $e->getMessage();
+    exit();
+}
+?>
