@@ -34,7 +34,11 @@ $profile = $stmt->fetch(PDO::FETCH_ASSOC);
     </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full relative">
+        <a href="view_profile.php?id_user=<?= htmlspecialchars($profile['id_user']) ?>" 
+        class="absolute top-4 right-4 text-gray-600 hover:text-gray-800 transition duration-300">
+            ✖ 
+        </a>
         <h1 class="text-3xl font-bold mb-4 text-gray-800">Edit Account Information</h1>
         <hr class="mb-6"/>
 
@@ -66,7 +70,7 @@ $profile = $stmt->fetch(PDO::FETCH_ASSOC);
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700">Password:</label>
-                <input type="password" name="password" value="<?= htmlspecialchars($profile['password']) ?>" required class="border border-gray-300 p-2 w-full rounded" />
+                <input type="password" name="password" placeholder="****" required class="border border-gray-300 p-2 w-full rounded" />
             </div>
             <button type="submit" class="bg-slate-800 text-white font-semibold py-2 px-4 rounded-lg shadow hover:bg-slate-700 transition duration-300">Save Changes</button>
         </form>
