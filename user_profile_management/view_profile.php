@@ -52,7 +52,7 @@ $event = $stmt->fetchAll(PDO::FETCH_ASSOC);
                  class="rounded-full w-64 h-64 object-cover mb-6 mx-auto">
 
             <!-- Profile Information Section -->
-            <h2 class="text-xl font-semibold mb-4 text-gray-700">Profile Information</h2>
+            <h2 class="text-xl font-semibold mb-1 text-gray-700">Profile Information</h2>
             <p class="text-lg text-gray-600"><strong>Username:</strong> <?= htmlspecialchars($profile['nama']) ?></p>
             <p class="text-lg text-gray-600 mb-6"><strong>Email:</strong> <?= htmlspecialchars($profile['email']) ?></p>
 
