@@ -35,25 +35,26 @@ $profile = $stmt->fetch(PDO::FETCH_ASSOC);
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
-        <h1 class="text-2xl font-bold mb-4 text-gray-800">Edit Account Information</h1>
+        <h1 class="text-3xl font-bold mb-4 text-gray-800">Edit Account Information</h1>
         <hr class="mb-6"/>
 
         <!-- Profile Photo Section -->
         <h2 class="text-xl font-semibold mb-2 text-gray-700">Profile Photo</h2>
         <div class="profile-pic-container">
-            <img src="../uploads/profile_photo/<?= htmlspecialchars($profile['profile_pic']) ?>" 
+        <img src="<?= !empty($peserta['profile_pic']) ? '../uploads/profile_photo/' . htmlspecialchars($peserta['profile_pic']) : '../assets/default_profile.jpg' ?>"  
                 alt="Your Profile Photo" 
                 class="rounded-full w-64 h-64 object-cover mx-auto">
             <div class="camera-icon" onclick="document.getElementById('photo-upload').click()">
-               <img src="./assets/icons8-pencil-100.png" alt="icon camera"
+               <img src="../assets/icons8-pencil-100.png" alt="icon camera"
                class="bg-gray-900 object-cover rounded-full h-10">
+               
             </div>
         </div>
+        <span id="file-name" class="block mt-2 text-gray-700">No photo selected yet</span>
         
         <!-- Edit Form -->
         <form action="edit_process.php?id_user=<?= htmlspecialchars($profile['id_user'])?>" method="post" enctype="multipart/form-data" class="mt-6">
             <input type="file" id="photo-upload" name="profile_pic" class="hidden" onchange="updateFileName()" />
-            <span id="file-name" class="block mt-2 text-gray-700">No photo selected yet</span>
             <input type="hidden" name="id_user" value="<?= htmlspecialchars($profile['id_user']) ?>" />
             <div class="mb-4">
                 <label class="block text-gray-700">Username:</label>
@@ -67,7 +68,7 @@ $profile = $stmt->fetch(PDO::FETCH_ASSOC);
                 <label class="block text-gray-700">Password:</label>
                 <input type="password" name="password" value="<?= htmlspecialchars($profile['password']) ?>" required class="border border-gray-300 p-2 w-full rounded" />
             </div>
-            <button type="submit" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow hover:bg-blue-600 transition duration-300">Save Changes</button>
+            <button type="submit" class="bg-slate-800 text-white font-semibold py-2 px-4 rounded-lg shadow hover:bg-slate-700 transition duration-300">Save Changes</button>
         </form>
     </div>
 
