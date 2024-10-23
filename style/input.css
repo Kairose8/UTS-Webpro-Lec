@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Sidebar open (visible) */
+.sidebar-open .main-content {
+    margin-left: 16rem; /* 64px wide sidebar (adjust width as needed) */
+  }
+  
+  /* Sidebar closed (hidden) */
+  .sidebar-closed .main-content {
+    margin-left: 0;
+  }
+
+/* Tracking */
+.progress-tracker {
+    margin-top: 30px;
+}
+
+.progress-tracker ul {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.progress-tracker .step {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: #1d4ed8; /* Blue color */
+    color: white;
+    border-radius: 50%;
+    line-height: 30px;
+    text-align: center;
+    font-size: 16px;
+    position: relative;
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+.progress-tracker .step-label {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+/* Style for the active step */
+.progress-tracker .active-step .step {
+    width: 40px; /* Bigger circle */
+    height: 40px;
+    font-size: 18px; /* Slightly bigger font size inside the circle */
+    line-height: 40px; /* Adjust to center the text */
+}
+
+.progress-tracker .active-step .step-label {
+    font-size: 16px; /* Make label text bigger for active step */
+    font-weight: bold; /* Optionally make it bold */
+    color: #1d4ed8; /* Highlight the active step text color */
+}
+
+/* Progress bar styles */
+.progress-tracker .progress-bar {
+    height: 4px;
+    width: 100%;
+    background: #e5e7eb;
+    border-radius: 2px;
+    position: relative;
+}
+
+.progress-tracker .active-bar {
+    height: 4px;
+    background-color: #1d4ed8; /* Blue color for active step */
+    width: 25%; /* Adjust this width based on the current step */
+    transition: width 0.3s ease;
+}
+
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
