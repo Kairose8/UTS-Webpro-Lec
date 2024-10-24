@@ -1,5 +1,6 @@
 <?php
 include '../db_conn.php'; // Database connection
+include '../navbar/navbar-admin.php';
 
 // Fetch locations from the database for the location dropdown filter
 $stmt = $conn->prepare("SELECT DISTINCT lokasi FROM event");
@@ -130,7 +131,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
 <body class="h-screen bg-gray-100">
 
     <!-- Sidebar -->
-    <div id="sidebar" class="fixed top-0 left-0 w-64 h-full bg-gray-800 text-white transition-transform duration-300 ease-in-out transform -translate-x-full z-20">
+    <div id="sidebar" class="fixed top-7 left-0 w-64 h-full bg-gray-800 text-white transition-transform duration-300 ease-in-out transform -translate-x-full z-20">
         <button onclick="toggleSidebar()" class="p-4 text-right">
             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>

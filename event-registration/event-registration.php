@@ -2,6 +2,12 @@
 session_start();
 include '../db_conn.php'; // Database connection
 
+if (!isset($_SESSION['id_user'])) {
+    // Redirect to login page if user is not logged in
+    header("Location: ../login/login.php");
+    exit();
+}
+
 // Assuming user is logged in and user ID is available in session
 $id_user = isset($_SESSION['id_user']) ? (int)$_SESSION['id_user'] : null; // Cast to integer for safety
 
@@ -45,8 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
         $updateCapacity = $conn->prepare("UPDATE event SET jumlah_sekarang = jumlah_sekarang + 1 WHERE id_event = :id_event");
         $updateCapacity->execute(['id_event' => $id_event]);
 
-        $_SESSION['message'] = 'You have successfully registered for the event.';
-        header("Location: event-register.php?id_event=" . urlencode($id_event));
+        // $_SESSION['message'] = 'You have successfully registered for the event.';
+        header("Location: event-registration-success.php?id_event=" . urlencode($id_event));
         exit();
     }
 }
@@ -97,6 +103,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cancel'])) {
             <div class="text-red-600 font-bold mt-6">
                 This event has reached its maximum capacity. You cannot register.
             </div>
+            <div class="flex justify-between mt-8">
+                <!-- Back Button -->
+                <form action="../event-browsing/event-browsing.php" method="GET">
+                    <button type="submit" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
+                        Back to Event Browsing
+                    </button>
+                </form>
         <?php else: ?>
             <!-- Registration or Cancel Button -->
             <div class="flex justify-between mt-8">

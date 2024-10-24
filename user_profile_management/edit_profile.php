@@ -45,7 +45,7 @@ $profile = $stmt->fetch(PDO::FETCH_ASSOC);
         <!-- Profile Photo Section -->
         <h2 class="text-xl font-semibold mb-2 text-gray-700">Profile Photo</h2>
         <div class="profile-pic-container">
-        <img src="<?= !empty($profile['profile_pic']) ? '../uploads/profile_photo/' . htmlspecialchars($profile['profile_pic']) : '../assets/default_profile.jpg' ?>"  
+        <img src="<?= htmlspecialchars($profile['profile_pic']) ?>"  
                 alt="Your Profile Photo" 
                 class="rounded-full w-64 h-64 object-cover mx-auto">
             <div class="camera-icon" onclick="document.getElementById('photo-upload').click()">
