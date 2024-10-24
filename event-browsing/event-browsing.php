@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../db_conn.php'; // Database connection
+include '../navbar/navbar-user.php';
 
 // Get the current date
 $currentDate = date("Y-m-d");
@@ -11,7 +12,7 @@ $endDate = isset($_GET['end-date']) && $_GET['end-date'] != '' ? htmlspecialchar
 $searchQuery = isset($_GET['search']) && $_GET['search'] != '' ? htmlspecialchars($_GET['search']) : null;
 
 // Build the query for upcoming events sorted by date
-$upcomingEventsQuery = "SELECT * FROM event WHERE status != 'deleted' AND tanggal >= :currentDate";
+$upcomingEventsQuery = "SELECT * FROM event WHERE status != 'Cancelled' AND tanggal >= :currentDate";
 
 // Add date range filter if both start and end dates are selected
 if ($startDate && $endDate) {

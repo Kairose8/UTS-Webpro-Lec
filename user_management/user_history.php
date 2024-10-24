@@ -81,9 +81,16 @@ $event = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <div class="flex justify-center mb-6 -mt-5 text-xl">
-        <form action="../admin-dashboard/admin-dashboard-index.php" method="GET">
-            <button type="submit" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
-                Back to Admin Dashboard
+        <form action="../event-browsing/event-browsing.php" method="GET">
+            <button type="submit" class="mr-5 bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
+                To Browse Events
+            </button>
+        </form>
+
+        <form action="../user_profile_management/view_profile.php" method="GET">
+            <input type="hidden" name="id_user" value="<?= htmlspecialchars($profile['id_user']) ?>">
+            <button type="submit" class="ml-5 bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
+                To Profile
             </button>
         </form>
     </div>
