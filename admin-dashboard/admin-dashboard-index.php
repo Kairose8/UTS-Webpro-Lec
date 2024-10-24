@@ -13,12 +13,14 @@ $currentDate = date("Y-m-d");
 $selectedLocation = isset($_GET['location']) && $_GET['location'] != '' ? $_GET['location'] : null;
 $startDate = isset($_GET['start-date']) && $_GET['start-date'] != '' ? $_GET['start-date'] : null;
 $endDate = isset($_GET['end-date']) && $_GET['end-date'] != '' ? $_GET['end-date'] : null;
+$searchQuery = isset($_GET['search']) && $_GET['search'] != '' ? $_GET['search'] : null;
+
 
 // Flag to check if filters are applied
 $filtersApplied = $selectedLocation || ($startDate && $endDate);
 
 // Build the query for upcoming events
-$upcomingEventsQuery = "SELECT * FROM event WHERE tanggal >= :currentDate AND status != 'deleted' ORDER BY tanggal ASC";
+$upcomingEventsQuery = "SELECT * FROM event WHERE status != 'deleted' AND tanggal >= :currentDate"; // Base WHERE condition
 
 // Add location filter if a location is selected
 if ($selectedLocation) {
@@ -29,6 +31,14 @@ if ($selectedLocation) {
 if ($startDate && $endDate) {
     $upcomingEventsQuery .= " AND tanggal BETWEEN :startDate AND :endDate";
 }
+
+// Add search filter if a search query is provided
+if ($searchQuery) {
+    $upcomingEventsQuery .= " AND nama_event LIKE :searchQuery";
+}
+
+// Add ordering to the query
+$upcomingEventsQuery .= " ORDER BY tanggal ASC";
 
 // Prepare and execute the query
 $upcomingStmt = $conn->prepare($upcomingEventsQuery);
@@ -42,11 +52,14 @@ if ($startDate && $endDate) {
     $upcomingStmt->bindValue(':startDate', $startDate);
     $upcomingStmt->bindValue(':endDate', $endDate);
 }
+if ($searchQuery) {
+    $upcomingStmt->bindValue(':searchQuery', '%' . $searchQuery . '%');
+}
 $upcomingStmt->execute();
 $upcomingEvents = $upcomingStmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Build the query for past events
-$pastEventsQuery = "SELECT * FROM event WHERE tanggal < :currentDate AND status != 'deleted'";
+$pastEventsQuery = "SELECT * FROM event WHERE status != 'deleted' AND tanggal < :currentDate"; // Base WHERE condition
 
 // Add location filter if a location is selected
 if ($selectedLocation) {
@@ -151,6 +164,12 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
             </button>
         </header>
 
+        <!-- Search Bar (Centered in Main Content) -->
+        <div class="flex justify-center my-8">
+            <input type="text" id="search" name="search" class="w-full md:w-1/2 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600" placeholder="Search events" value="<?= $searchQuery ?>" />
+            <button onclick="applyFilters()" class="ml-3 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Search</button>
+        </div>
+
         <!-- Tabs for Upcoming and Past Events (Hidden if filters applied) -->
         <?php if (!$filtersApplied): ?>
         <div class="flex justify-center my-4">
@@ -164,10 +183,12 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
             <?php if (count($upcomingEvents) > 0): ?>
                 <?php foreach ($upcomingEvents as $event): ?>
                     <div class="bg-white shadow p-4 rounded relative group">
-                        <img src="<?= $event['banner'] ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
-                        <h3 class="text-xl font-bold"><?= $event['nama_event'] ?></h3>
-                        <p><?= $event['tanggal'] ?></p>
-                        <p><?= $event['lokasi'] ?></p>
+                        <a href="./event-register.php?id_event=<?= $event['id_event'] ?>">
+                            <img src="<?= $event['banner'] ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
+                            <h3 class="text-xl font-bold"><?= $event['nama_event'] ?></h3>
+                            <p><?= $event['tanggal'] ?></p>
+                            <p><?= $event['lokasi'] ?></p>
+                        </a>
 
                         <!-- Edit and Delete Buttons on Hover -->
                         <div class="absolute top-2 right-2 hidden group-hover:flex space-x-2">
@@ -189,10 +210,12 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
             <?php if (count($pastEvents) > 0): ?>
                 <?php foreach ($pastEvents as $event): ?>
                     <div class="bg-white shadow p-4 rounded relative group">
-                        <img src="<?= $event['banner'] ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
-                        <h3 class="text-xl font-bold"><?= $event['nama_event'] ?></h3>
-                        <p><?= $event['tanggal'] ?></p>
-                        <p><?= $event['lokasi'] ?></p>
+                        <a href="./event-register.php?id_event=<?= $event['id_event'] ?>">    
+                            <img src="<?= $event['banner'] ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
+                            <h3 class="text-xl font-bold"><?= $event['nama_event'] ?></h3>
+                            <p><?= $event['tanggal'] ?></p>
+                            <p><?= $event['lokasi'] ?></p>
+                        </a>
 
                         <!-- Edit and Delete Buttons on Hover -->
                         <div class="absolute top-2 right-2 hidden group-hover:flex space-x-2">
@@ -220,8 +243,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
     <script>
         function toggleSidebar() {
             document.getElementById("sidebar").classList.toggle("-translate-x-full");
-            document.getElementById("main-content").classList.toggle("ml-64");
-            // document.getElementById("main-content").classList.toggle("pl-32");
+            // document.getElementById("main-content").classList.toggle("ml-64");
 
             // Toggle hamburger menu visibility
             document.getElementById("toggle-sidebar").classList.toggle("hidden");
@@ -231,6 +253,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
             const locationFilter = document.getElementById('locationFilter').value;
             const startDate = document.getElementById('start-date').value;
             const endDate = document.getElementById('end-date').value;
+            const searchQuery = document.getElementById('search').value;
 
             let url = 'admin-dashboard-index.php?';
 
@@ -242,6 +265,9 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
             }
             if (endDate) {
                 url += 'end-date=' + encodeURIComponent(endDate);
+            }
+            if (searchQuery) {
+                url += 'search=' + encodeURIComponent(searchQuery);
             }
 
             window.location.href = url;
