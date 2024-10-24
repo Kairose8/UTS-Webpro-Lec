@@ -16,39 +16,30 @@ $startDate = isset($_GET['start-date']) && $_GET['start-date'] != '' ? htmlspeci
 $endDate = isset($_GET['end-date']) && $_GET['end-date'] != '' ? htmlspecialchars($_GET['end-date']) : null;
 $searchQuery = isset($_GET['search']) && $_GET['search'] != '' ? htmlspecialchars($_GET['search']) : null;
 
-
 // Flag to check if filters are applied
 $filtersApplied = $selectedLocation || $selectedStatus || ($startDate && $endDate);
 
-// Build the query for upcoming events
-$upcomingEventsQuery = "SELECT * FROM event WHERE status != 'deleted' AND tanggal >= :currentDate"; // Base WHERE condition
-
-// Add location filter if a location is selected
+// Build query for upcoming events
+$upcomingEventsQuery = "SELECT * FROM event WHERE tanggal >= :currentDate";
 if ($selectedLocation) {
     $upcomingEventsQuery .= " AND lokasi = :location";
 }
-
 if ($selectedStatus) {
     $upcomingEventsQuery .= " AND status = :status";
 }
-
-// Add date range filter if both start and end dates are selected
+if (!$selectedStatus) {
+    $upcomingEventsQuery .= " AND status != 'Cancelled'";
+}
 if ($startDate && $endDate) {
     $upcomingEventsQuery .= " AND tanggal BETWEEN :startDate AND :endDate";
 }
-
-// Add search filter if a search query is provided
 if ($searchQuery) {
     $upcomingEventsQuery .= " AND nama_event LIKE :searchQuery";
 }
-
-// Add ordering to the query
 $upcomingEventsQuery .= " ORDER BY tanggal ASC";
 
-// Prepare and execute the query
+// Prepare and execute the query for upcoming events
 $upcomingStmt = $conn->prepare($upcomingEventsQuery);
-
-// Bind parameters based on the filters
 $upcomingStmt->bindValue(':currentDate', $currentDate);
 if ($selectedLocation) {
     $upcomingStmt->bindValue(':location', $selectedLocation);
@@ -66,34 +57,30 @@ if ($searchQuery) {
 $upcomingStmt->execute();
 $upcomingEvents = $upcomingStmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Build the query for past events
-$pastEventsQuery = "SELECT * FROM event WHERE status != 'deleted' AND tanggal < :currentDate"; // Base WHERE condition
-
-// Add location filter if a location is selected
+// Build query for past events
+$pastEventsQuery = "SELECT * FROM event WHERE tanggal < :currentDate";
 if ($selectedLocation) {
     $pastEventsQuery .= " AND lokasi = :location";
 }
-
-// Add status filter (Open, Closed, Cancelled)
 if ($selectedStatus) {
-    $upcomingEventsQuery .= " AND status = :status";
+    $pastEventsQuery .= " AND status = :status";
 }
-
-// Add date range filter if both start and end dates are selected
+if (!$selectedStatus) {
+    $pastEventsQuery .= " AND status != 'Cancelled'";
+}
 if ($startDate && $endDate) {
     $pastEventsQuery .= " AND tanggal BETWEEN :startDate AND :endDate";
 }
+$pastEventsQuery .= " ORDER BY tanggal DESC";
 
-// Prepare and execute the query
+// Prepare and execute the query for past events
 $pastStmt = $conn->prepare($pastEventsQuery);
-
-// Bind parameters based on the filters
 $pastStmt->bindValue(':currentDate', $currentDate);
 if ($selectedLocation) {
     $pastStmt->bindValue(':location', $selectedLocation);
 }
 if ($selectedStatus) {
-    $upcomingStmt->bindValue(':status', $selectedStatus);
+    $pastStmt->bindValue(':status', $selectedStatus);
 }
 if ($startDate && $endDate) {
     $pastStmt->bindValue(':startDate', $startDate);
@@ -120,15 +107,24 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
 
         /* Add smooth transition animation to the buttons */
         #upcomingTab, #pastTab {
-            transition: all 0.3s ease; /* Smooth animation for all properties */
+            transition: all 0.3s ease;
         }
 
         /* Hover effects for buttons */
         #upcomingTab:hover, #pastTab:hover {
-            background-color: #1D4ED8; /* Darker blue for hover state */
-            transform: scale(1.05); /* Slightly enlarge the button */
-            color: white; /* Make the text color white */
+            background-color: #1D4ED8;
+            transform: scale(1.05);
+            color: white;
         }
+
+        #deleteModal {
+            display: none;
+        }
+
+        #deleteModal.flex {
+            display: flex;
+        }
+
     </style>
 </head>
 <body class="h-screen bg-gray-100">
@@ -201,17 +197,17 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
         <!-- Tabs for Upcoming and Past Events (Hidden if filters applied) -->
         <?php if (!$filtersApplied): ?>
         <div class="flex justify-center my-4">
-            <button id="upcomingTab" onclick="showUpcoming()" class="p-4 text-lg transition-all duration-300 bg-blue-600 text-white rounded-l-lg">Upcoming Events</button>
-            <button id="pastTab" onclick="showPast()" class="p-4 text-lg transition-all duration-300 bg-slate-200 text-black rounded-r-lg">Past Events</button>
+            <button id="upcomingTab" onclick="showUpcoming()" class="p-4 text-lg font-semibold transition-all duration-300 bg-blue-600 text-white rounded-l-lg">Upcoming Events</button>
+            <button id="pastTab" onclick="showPast()" class="p-4 text-lg font-semibold transition-all duration-300 bg-slate-200 text-black rounded-r-lg">Past Events</button>
         </div>
         <?php endif; ?>
 
         <!-- Upcoming Events Section -->
-        <div id="upcomingEvents" class="grid grid-cols-3 gap-4 p-4">
+        <div id="upcomingEvents" class="<?= !$filtersApplied ? '' : 'hidden' ?> grid grid-cols-3 gap-4 p-4">
             <?php if (count($upcomingEvents) > 0): ?>
                 <?php foreach ($upcomingEvents as $event): ?>
-                    <div class="bg-white shadow p-4 rounded relative group <?= $event['status'] == 'Closed' ? 'opacity-50' : '' ?>">
-                        <a href="./admin-dashboard-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>">
+                    <div class="bg-white shadow p-4 rounded relative group">
+                        <a href="./admin-dashboard-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="<?= htmlspecialchars($event['status']) == 'Closed' ? 'opacity-50' : '' ?>">
                             <img src="<?= htmlspecialchars($event['banner']) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
                             <h3 class="text-xl font-bold"><?= htmlspecialchars($event['nama_event']) ?></h3>
                             <p><?= htmlspecialchars($event['tanggal']) ?></p>
@@ -223,22 +219,22 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
                             <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
                             <form action="../event-management/edit-event-delete.php" method="POST">
                                 <input type="hidden" name="id_event" value="<?= htmlspecialchars($event['id_event']) ?>">
-                                <button type="submit" class="bg-red-600 text-white p-2 rounded">Delete</button>
+                                <button type="button" onclick="showDeleteModal(<?= htmlspecialchars($event['id_event']) ?>)" class="bg-red-600 text-white p-2 rounded">Delete</button>
                             </form>
                         </div>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <p class="text-center col-span-3">No events found.</p>
+                <p class="text-center col-span-3">No upcoming events found.</p>
             <?php endif; ?>
         </div>
 
         <!-- Past Events Section -->
-        <div id="pastEvents" class="grid grid-cols-3 gap-4 p-4 hidden">
+        <div id="pastEvents" class="<?= !$filtersApplied ? '' : 'hidden' ?> grid grid-cols-3 gap-4 p-4">
             <?php if (count($pastEvents) > 0): ?>
                 <?php foreach ($pastEvents as $event): ?>
-                    <div class="bg-white shadow p-4 rounded relative group opacity-50">
-                        <a href="./admin-dashboard-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>">
+                    <div class="bg-white shadow p-4 rounded relative group">
+                        <a href="./admin-dashboard-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="opacity-50">
                             <img src="<?= htmlspecialchars($event['banner']) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
                             <h3 class="text-xl font-bold"><?= htmlspecialchars($event['nama_event']) ?></h3>
                             <p><?= htmlspecialchars($event['tanggal']) ?></p>
@@ -250,7 +246,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
                             <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
                             <form action="../event-management/edit-event-delete.php" method="POST" >
                                 <input type="hidden" name="id_event" value="<?= htmlspecialchars($event['id_event']) ?>">
-                                <button type="submit" class="bg-red-600 text-white p-2 rounded" onsubmit="return confirm('Are you sure you want to delete this event?');">Delete</button>
+                                <button type="button" onclick="showDeleteModal(<?= htmlspecialchars($event['id_event']) ?>)" class="bg-red-600 text-white p-2 rounded" onsubmit="return confirm('Are you sure you want to delete this event?');">Delete</button>
                             </form>
                         </div>
                     </div>
@@ -260,11 +256,72 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
             <?php endif; ?>
         </div>
 
+        <!-- Filtered Events Section (visible if filters are applied) -->
+        <?php if ($filtersApplied): ?>
+        <div id="filteredEvents" class="grid grid-cols-3 gap-4 p-4">
+            <?php foreach ($upcomingEvents as $event): ?>
+                <div class="bg-white shadow p-4 rounded relative group">
+                    <a href="./admin-dashboard-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="<?= $event['status'] == 'Closed' ? 'opacity-50' : '' ?>">
+                        <img src="<?= htmlspecialchars($event['banner']) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
+                        <h3 class="text-xl font-bold"><?= htmlspecialchars($event['nama_event']) ?></h3>
+                        <p><?= htmlspecialchars($event['tanggal']) ?></p>
+                        <p><?= htmlspecialchars($event['lokasi']) ?></p>
+                    </a>
+                    <!-- Edit and Delete Buttons for Filtered Events -->
+                    <div class="absolute top-2 right-2 hidden group-hover:flex space-x-2">
+                        <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
+                        <form action="../event-management/edit-event-delete.php" method="POST">
+                            <input type="hidden" name="id_event" value="<?= htmlspecialchars($event['id_event']) ?>">
+                            <button type="button" onclick="showDeleteModal(<?= htmlspecialchars($event['id_event']) ?>)" type="submit" class="bg-red-600 text-white p-2 rounded">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+            
+            <?php foreach ($pastEvents as $event): ?>
+                <div class="bg-white shadow p-4 rounded relative group">
+                    <a href="./admin-dashboard-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="opacity-50">
+                        <img src="<?= htmlspecialchars($event['banner']) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
+                        <h3 class="text-xl font-bold"><?= htmlspecialchars($event['nama_event']) ?></h3>
+                        <p><?= htmlspecialchars($event['tanggal']) ?></p>
+                        <p><?= htmlspecialchars($event['lokasi']) ?></p>
+                    </a>
+                    <!-- Edit and Delete Buttons for Filtered Past Events -->
+                    <div class="absolute top-2 right-2 hidden group-hover:flex space-x-2">
+                        <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
+                        <form action="../event-management/edit-event-delete.php" method="POST">
+                            <input type="hidden" name="id_event" value="<?= htmlspecialchars($event['id_event']) ?>">
+                            <button type="button" onclick="showDeleteModal(<?= htmlspecialchars($event['id_event']) ?>)" type="submit" class="bg-red-600 text-white p-2 rounded">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
+
+        <!-- Modal Structure for Delete Confirmation -->
+        <div id="deleteModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+            <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+                <h2 class="text-xl font-bold mb-4">Are you sure?</h2>
+                <p class="mb-6">Do you really want to delete this event?</p>
+                <div class="flex justify-end space-x-4">
+                    <button id="cancelButton" class="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded-lg">Cancel</button>
+                    <form id="deleteForm" action="../event-management/edit-event-delete.php" method="POST">
+                        <input type="hidden" name="id_event" id="deleteEventId">
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- Add Event Button -->
-        <a href="../event-management/create-event-details.php" class="fixed bottom-7 right-7  text-xl bg-green-600 text-white p-3 rounded-full shadow-lg hover:bg-green-700 transition duration-300">
+        <a href="../event-management/create-event-details.php" class="fixed bottom-24 right-7 text-xl bg-green-500 text-white p-3 rounded-lg shadow-lg hover:bg-green-600 transition duration-300">
             Add Event
         </a>
-
+        
+        <a href="../user_management/view_users.php" class="fixed bottom-7 right-7 text-xl bg-blue-500 text-white p-3 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300">
+            Manage Users
+        </a>
     </div>
 
     <script>
@@ -305,22 +362,29 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         function resetFilters() {
-            // Reload the page without any filters
+            // Reset filters and reload the page to its initial state
             window.location.href = 'admin-dashboard-index.php';
+
+            // Remove active styling from both tabs
+            document.getElementById("upcomingTab").classList.remove("bg-blue-600", "text-white");
+            document.getElementById("upcomingTab").classList.add("bg-slate-200", "text-black");
+
+            document.getElementById("pastTab").classList.remove("bg-blue-600", "text-white");
+            document.getElementById("pastTab").classList.add("bg-slate-200", "text-black");
         }
 
         function showUpcoming() {
-        // Show upcoming events
-        document.getElementById("upcomingEvents").classList.remove("hidden");
-        document.getElementById("pastEvents").classList.add("hidden");
+            // Show upcoming events
+            document.getElementById("upcomingEvents").classList.remove("hidden");
+            document.getElementById("pastEvents").classList.add("hidden");
 
-        // Apply active styles to the upcoming tab
-        document.getElementById("upcomingTab").classList.add("bg-blue-600", "text-white");
-        document.getElementById("upcomingTab").classList.remove("bg-slate-200", "text-black");
+            // Apply active styles to the upcoming tab
+            document.getElementById("upcomingTab").classList.add("bg-blue-600", "text-white");
+            document.getElementById("upcomingTab").classList.remove("bg-slate-200", "text-black");
 
-        // Reset past tab to inactive styles
-        document.getElementById("pastTab").classList.remove("bg-blue-600", "text-white");
-        document.getElementById("pastTab").classList.add("bg-slate-200", "text-black");
+            // Reset past tab to inactive styles
+            document.getElementById("pastTab").classList.remove("bg-blue-600", "text-white");
+            document.getElementById("pastTab").classList.add("bg-slate-200", "text-black");
         }
 
         function showPast() {
@@ -337,9 +401,51 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
             document.getElementById("upcomingTab").classList.add("bg-slate-200", "text-black");
         }
 
-        function confirmDelete() {
-            return confirm("Are you sure you want to delete this event?");
+        window.onload = function () {
+            // Check if filters are applied (based on PHP variable passed)
+            hideDeleteModal(); // Ensure the modal is hidden by default
+
+            const filtersApplied = <?= json_encode($filtersApplied) ?>;
+
+            // If no filters are applied, remove active styles from both tabs
+            if (!filtersApplied) {
+                document.getElementById("upcomingTab").classList.remove("bg-blue-600", "text-white");
+                document.getElementById("upcomingTab").classList.add("bg-slate-200", "text-black");
+
+                document.getElementById("pastTab").classList.remove("bg-blue-600", "text-white");
+                document.getElementById("pastTab").classList.add("bg-slate-200", "text-black");
+            }
+        };
+
+        // Function to show the modal
+        function showDeleteModal(eventId) {
+            const modal = document.getElementById('deleteModal');
+            const deleteEventId = document.getElementById('deleteEventId');
+            deleteEventId.value = eventId; // Set the event ID in the form
+            modal.classList.remove('hidden'); // Show the modal
+            modal.classList.add('flex');     // Display modal flexibly
         }
+
+        // Function to hide the modal
+        function hideDeleteModal() {
+            const modal = document.getElementById('deleteModal');
+            modal.classList.add('hidden');  // Hide the modal
+            modal.classList.remove('flex'); // Remove the flex display
+        }
+
+        // When the Cancel button is clicked, hide the modal
+        document.getElementById('cancelButton').addEventListener('click', function () {
+            hideDeleteModal();
+        });
+
+        // Optional: Hide the modal if the user clicks outside of it
+        // window.addEventListener('click', function (event) {
+        //     const modal = document.getElementById('deleteModal');
+        //     if (event.target === modal) {
+        //         hideDeleteModal();
+        //     }
+        // });
+
     </script>
 </body>
 </html>

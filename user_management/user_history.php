@@ -34,7 +34,7 @@ $event = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container mx-auto p-10">
         <!-- User Profile Info -->
         <div class="bg-slate-800 p-6 rounded-lg shadow-lg mb-8 flex items-center">
-            <img src="<?= !empty($profile['profile_pic']) ? '../uploads/profile_photo/' . htmlspecialchars($profile['profile_pic']) : '../assets/default_profile.jpg' ?>" 
+            <img src="<?= htmlspecialchars($profile['profile_pic']) ?>" 
                  alt="Profile picture of <?= htmlspecialchars($profile['nama']) ?>" 
                  class="w-24 h-24 rounded-full object-cover mr-4">
             <div>
@@ -56,7 +56,7 @@ $event = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php foreach ($event as $eventItem): ?>
                         <div class="bg--50 p-4 rounded-lg shadow-sm">
                             <?php if (!empty($eventItem['banner'])): ?>
-                                <img src="../uploads/banner/<?= htmlspecialchars($eventItem['banner']) ?>" 
+                                <img src="<?= htmlspecialchars($eventItem['banner']) ?>" 
                                      alt="Banner for <?= htmlspecialchars($eventItem['nama_event']) ?>" 
                                      class="w-full h-48 object-cover rounded-lg mb-4 transition-transform duration-300 transform hover:scale-105 cursor-pointer" 
                                      onclick="openModal('<?= htmlspecialchars($eventItem['banner']) ?>')">
@@ -79,6 +79,15 @@ $event = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <img id="full-image" src="" alt="Full view" class="max-w-full max-h-full rounded-lg">
         <button onclick="closeModal()" class="absolute top-5 right-5 text-white text-3xl">×</button>
     </div>
+
+    <div class="flex justify-center mb-6 -mt-5 text-xl">
+        <form action="../admin-dashboard/admin-dashboard-index.php" method="GET">
+            <button type="submit" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
+                Back to Admin Dashboard
+            </button>
+        </form>
+    </div>
+
     <script>
     function openModal(imageSrc) {
         document.getElementById('full-image').src = '../uploads/banner/' + imageSrc;
