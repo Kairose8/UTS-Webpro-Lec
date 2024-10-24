@@ -138,12 +138,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['event_banner'])) {
                 </li>
             </ul>
             <div class="progress-bar bg-gray-300 w-full h-1 rounded-full relative">
-                <div class="active-bar bg-blue-600 h-1 rounded-full" style="width:69%"></div>
+                <div class="active-bar bg-slate-800 h-1 rounded-full" style="width:69%"></div>
             </div>
         </div>
 
         <!-- Upload Form -->
-        <h1 class="text-2xl font-bold text-blue-600 mb-6 text-center">Upload Event Banner</h1>
+        <h1 class="text-2xl font-bold text-slate-800 mb-6 text-center">Upload Event Banner</h1>
 
         <form action="create-event-banner.php" method="POST" enctype="multipart/form-data" class="space-y-4">
             <div>
@@ -153,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['event_banner'])) {
 
             <!-- Submit Button -->
             <div class="mt-6">
-                <button type="submit" class="bg-blue-600 text-white w-full py-2 rounded-lg hover:bg-blue-700 transition">Next</button>
+                <button type="submit" class="bg-slate-800 text-white w-full py-2 rounded-lg hover:bg-slate-700 transition">Next</button>
             </div>
         </form>
 

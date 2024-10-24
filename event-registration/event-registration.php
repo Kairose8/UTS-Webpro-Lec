@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cancel'])) {
 </head>
 <body class="bg-gray-100 flex justify-center items-center min-h-screen text-lg">
     <div class="bg-white p-10 rounded-lg shadow-lg max-w-4xl w-full mt-8">
-        <h1 class="text-2xl font-bold text-blue-600 mb-6 text-center">Event Registration</h1>
+        <h1 class="text-2xl font-bold text-slate-800 mb-6 text-center">Event Registration</h1>
 
         <div class="h-32 w-full">
             <img src="<?= htmlspecialchars($event['banner'], ENT_QUOTES, 'UTF-8') ?>" alt="Event Banner" class="w-full h-full object-cover">
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cancel'])) {
             <!-- Registration or Cancel Button -->
             <div class="flex justify-between mt-8">
                 <!-- Back Button -->
-                <form action="../event-browsing/event-browsing.php" method="GET">
+                <form action="../index.php" method="GET">
                     <button type="submit" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
                         Back to Event Browsing
                     </button>
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cancel'])) {
 
                 <?php if (!$userRegistered): ?>
                     <form action="./event-registration.php?id_event=<?= urlencode($event['id_event']) ?>" method="POST">
-                        <button type="submit" name="register" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                        <button type="submit" name="register" class="bg-slate-800 text-white px-6 py-2 rounded-lg hover:bg-slate-700 transition">
                             Register for Event
                         </button>
                     </form>

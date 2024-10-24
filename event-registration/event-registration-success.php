@@ -25,9 +25,9 @@
         <p class="text-gray-600 mb-6">Your event has been successfully added to the system.</p>
 
         <!-- Back to Dashboard Button -->
-        <form action="../event-browsing/event-browsing.php" method="GET">
+        <form action="../index.php" method="GET">
             <button type="submit"
-                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+                    class="bg-slate-800 text-white px-6 py-2 rounded-lg hover:bg-slate-700 transition duration-300">
                 Back to Event Browsing
             </button>
         </form>
