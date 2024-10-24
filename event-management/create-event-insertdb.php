@@ -8,13 +8,13 @@ $query = "INSERT INTO event (nama_event, tanggal, waktu, lokasi, deskripsi, juml
 $stmt = $conn->prepare($query);
 
 $stmt->execute([
-    ':name' => $_SESSION['event_name'],
-    ':date' => $_SESSION['event_date'],
-    ':time' => $_SESSION['event_time'],
-    ':location' => $_SESSION['event_location'],
-    ':description' => $_SESSION['event_description'],
-    ':capacity' => $_SESSION['event_capacity'],
-    ':banner' => $_SESSION['event_banner']
+    ':name' => htmlspecialchars($_SESSION['event_name']),
+    ':date' => htmlspecialchars($_SESSION['event_date']),
+    ':time' => htmlspecialchars($_SESSION['event_time']),
+    ':location' => htmlspecialchars($_SESSION['event_location']),
+    ':description' => htmlspecialchars($_SESSION['event_description']),
+    ':capacity' => htmlspecialchars($_SESSION['event_capacity']),
+    ':banner' => htmlspecialchars($_SESSION['event_banner'])
 ]);
 
 session_unset();

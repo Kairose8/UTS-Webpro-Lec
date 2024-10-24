@@ -17,6 +17,7 @@ class ComposerStaticInit62e10e6c8df9afc192311b196c75bb33
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
             'PhpOffice\\PhpSpreadsheet\\' => 25,
+            'Pc\\ViewEventRegistrations\\' => 26,
         ),
         'M' => 
         array (
@@ -49,6 +50,10 @@ class ComposerStaticInit62e10e6c8df9afc192311b196c75bb33
         'PhpOffice\\PhpSpreadsheet\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet',
+        ),
+        'Pc\\ViewEventRegistrations\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
         ),
         'Matrix\\' => 
         array (

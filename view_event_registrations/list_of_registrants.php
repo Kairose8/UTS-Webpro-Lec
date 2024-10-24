@@ -25,8 +25,8 @@ $data_event = $stmt->fetch(PDO::FETCH_ASSOC);
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-10">
-        <h1 class="text-4xl font-bold text-center mb-1">List of Registrants</h1>
-        <p class="text-2xl text-center mb-8"><?= htmlspecialchars($data_event['nama_event'])?></p>
+        <h1 class="text-4xl font-bold text-center mb-1 ml-3">List of Registrants</h1>
+        <p class="text-2xl text-center mb-8 mt-6"><?= htmlspecialchars($data_event['nama_event'])?></p>
 
         <div class="overflow-x-auto pb-10 flex justify-center items-center">
             <table class="w-9/12 max-w-full text-center bg-white shadow-md rounded-lg overflow-hidden">
@@ -46,7 +46,7 @@ $data_event = $stmt->fetch(PDO::FETCH_ASSOC);
                         <td class="py-4 pl-6"><?= htmlspecialchars($peserta['email'])?></td>
                         <td class="py-4 px-6">
                             <div class="flex justify-center items-center">
-                                <img src="<?= !empty($peserta['profile_pic']) ? '../uploads/profile_photo/' . htmlspecialchars($peserta['profile_pic']) : '../assets/default_profile.jpg' ?>" 
+                                <img src="<?= htmlspecialchars($peserta['profile_pic']) ?>" 
                                     alt="Profile picture of <?= htmlspecialchars($peserta['nama']) ?>" 
                                     class="w-16 h-16 rounded-full object-cover" />
                             </div>
@@ -57,11 +57,19 @@ $data_event = $stmt->fetch(PDO::FETCH_ASSOC);
             </table>
         </div>
 
-        <div class="flex justify-center items-center mt-8">
+        <div class="flex justify-center content-center items-center mt-5">
             <a href="generate_excel.php?id_event=<?= htmlspecialchars($data_event['id_event'])?>" 
                class="bg-slate-800 hover:bg-slate-700 text-xl text-white font-bold py-2 px-4 rounded-lg shadow-md">
-               Download Excel File
+               Download .xlxs File
             </a>
+        </div>
+        <div class="flex justify-center content-center items-center mt-5">
+            <form action="../admin-dashboard/admin-dashboard-index.php" method="GET">
+                <button type="submit"
+                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+                    Back to Dashboard
+                </button>
+            </form>
         </div>
     </div>
 </body>
