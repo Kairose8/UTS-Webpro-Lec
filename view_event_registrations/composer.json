@@ -1,5 +1,19 @@
 {
+    "name": "pc/view_event_registrations",
+    "description": "Event Management Registrant List",
+    "autoload": {
+        "psr-4": {
+            "Pc\\ViewEventRegistrations\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jimagination",
+            "email": "jimmytandra65@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
     "require": {
-        "phpoffice/phpspreadsheet": "^3.3"
+        "phpoffice/phpspreadsheet": "dev-master"
     }
 }

@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+// Function to sanitize output data (against XSS)
+function sanitize_output($data) {
+    return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+}
 ?>
 
 <!DOCTYPE html>
@@ -38,18 +43,18 @@ session_start();
 
         <!-- Event Information -->
         <div class="space-y-4">
-            <p><strong class="font-semibold">Event Name:</strong> <?php echo $_SESSION['event_name']; ?></p>
-            <p><strong class="font-semibold">Event Date:</strong> <?php echo $_SESSION['event_date']; ?></p>
-            <p><strong class="font-semibold">Event Time:</strong> <?php echo $_SESSION['event_time']; ?></p>
-            <p><strong class="font-semibold">Event Location:</strong> <?php echo $_SESSION['event_location']; ?></p>
-            <p><strong class="font-semibold">Event Description:</strong> <?php echo $_SESSION['event_description']; ?></p>
-            <p><strong class="font-semibold">Max Capacity:</strong> <?php echo $_SESSION['event_capacity']; ?></p>
+            <p><strong class="font-semibold">Event Name:</strong> <?php echo sanitize_output($_SESSION['event_name']); ?></p>
+            <p><strong class="font-semibold">Event Date:</strong> <?php echo sanitize_output($_SESSION['event_date']); ?></p>
+            <p><strong class="font-semibold">Event Time:</strong> <?php echo sanitize_output($_SESSION['event_time']); ?></p>
+            <p><strong class="font-semibold">Event Location:</strong> <?php echo sanitize_output($_SESSION['event_location']); ?></p>
+            <p><strong class="font-semibold">Event Description:</strong> <?php echo sanitize_output($_SESSION['event_description']); ?></p>
+            <p><strong class="font-semibold">Max Capacity:</strong> <?php echo sanitize_output($_SESSION['event_capacity']); ?></p>
         </div>
 
         <!-- Event Banner -->
         <div class="mt-6">
             <h2 class="text-xl font-bold mb-2">Event Banner</h2>
-            <img src="<?php echo $_SESSION['event_banner']; ?>" alt="Event Banner" class="max-w-md border rounded-lg shadow-md">
+            <img src="<?php echo sanitize_output($_SESSION['event_banner']); ?>" alt="Event Banner" class="max-w-md border rounded-lg shadow-md">
         </div>
 
         <!-- Buttons -->

@@ -10,14 +10,15 @@ $locations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $currentDate = date("Y-m-d");
 
 // Get the filter values from the query parameters (if set)
-$selectedLocation = isset($_GET['location']) && $_GET['location'] != '' ? $_GET['location'] : null;
-$startDate = isset($_GET['start-date']) && $_GET['start-date'] != '' ? $_GET['start-date'] : null;
-$endDate = isset($_GET['end-date']) && $_GET['end-date'] != '' ? $_GET['end-date'] : null;
-$searchQuery = isset($_GET['search']) && $_GET['search'] != '' ? $_GET['search'] : null;
+$selectedLocation = isset($_GET['location']) && $_GET['location'] != '' ? htmlspecialchars($_GET['location']) : null;
+$selectedStatus = isset($_GET['status']) && $_GET['status'] != '' ? htmlspecialchars($_GET['status']) : null; 
+$startDate = isset($_GET['start-date']) && $_GET['start-date'] != '' ? htmlspecialchars($_GET['start-date']) : null;
+$endDate = isset($_GET['end-date']) && $_GET['end-date'] != '' ? htmlspecialchars($_GET['end-date']) : null;
+$searchQuery = isset($_GET['search']) && $_GET['search'] != '' ? htmlspecialchars($_GET['search']) : null;
 
 
 // Flag to check if filters are applied
-$filtersApplied = $selectedLocation || ($startDate && $endDate);
+$filtersApplied = $selectedLocation || $selectedStatus || ($startDate && $endDate);
 
 // Build the query for upcoming events
 $upcomingEventsQuery = "SELECT * FROM event WHERE status != 'deleted' AND tanggal >= :currentDate"; // Base WHERE condition
@@ -25,6 +26,10 @@ $upcomingEventsQuery = "SELECT * FROM event WHERE status != 'deleted' AND tangga
 // Add location filter if a location is selected
 if ($selectedLocation) {
     $upcomingEventsQuery .= " AND lokasi = :location";
+}
+
+if ($selectedStatus) {
+    $upcomingEventsQuery .= " AND status = :status";
 }
 
 // Add date range filter if both start and end dates are selected
@@ -48,6 +53,9 @@ $upcomingStmt->bindValue(':currentDate', $currentDate);
 if ($selectedLocation) {
     $upcomingStmt->bindValue(':location', $selectedLocation);
 }
+if ($selectedStatus) {
+    $upcomingStmt->bindValue(':status', $selectedStatus);
+}
 if ($startDate && $endDate) {
     $upcomingStmt->bindValue(':startDate', $startDate);
     $upcomingStmt->bindValue(':endDate', $endDate);
@@ -66,6 +74,11 @@ if ($selectedLocation) {
     $pastEventsQuery .= " AND lokasi = :location";
 }
 
+// Add status filter (Open, Closed, Cancelled)
+if ($selectedStatus) {
+    $upcomingEventsQuery .= " AND status = :status";
+}
+
 // Add date range filter if both start and end dates are selected
 if ($startDate && $endDate) {
     $pastEventsQuery .= " AND tanggal BETWEEN :startDate AND :endDate";
@@ -78,6 +91,9 @@ $pastStmt = $conn->prepare($pastEventsQuery);
 $pastStmt->bindValue(':currentDate', $currentDate);
 if ($selectedLocation) {
     $pastStmt->bindValue(':location', $selectedLocation);
+}
+if ($selectedStatus) {
+    $upcomingStmt->bindValue(':status', $selectedStatus);
 }
 if ($startDate && $endDate) {
     $pastStmt->bindValue(':startDate', $startDate);
@@ -92,6 +108,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
     <title>Admin Dashboard</title>
     <link href="../style/output.css" rel="stylesheet">
     <script src="../js/toggleSidebar.js"></script>
@@ -132,8 +149,19 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
             <select id="locationFilter" class="w-full p-2 rounded bg-gray-700">
                 <option value="">All</option>
                 <?php foreach ($locations as $location): ?>
-                    <option value="<?= $location['lokasi'] ?>" <?= $selectedLocation == $location['lokasi'] ? 'selected' : '' ?>><?= $location['lokasi'] ?></option>
+                    <option value="<?= htmlspecialchars($location['lokasi']) ?>" <?= $selectedLocation == htmlspecialchars($location['lokasi']) ? 'selected' : '' ?>><?= htmlspecialchars($location['lokasi']) ?></option>
                 <?php endforeach; ?>
+            </select>
+        </div>
+
+        <!-- Filter by Status -->
+        <div class="p-4">
+            <label for="statusFilter" class="block">Status:</label>
+            <select id="statusFilter" class="w-full p-2 rounded bg-gray-700">
+                <option value="">All</option>
+                <option value="Open" <?= $selectedStatus == 'Open' ? 'selected' : '' ?>>Open</option>
+                <option value="Closed" <?= $selectedStatus == 'Closed' ? 'selected' : '' ?>>Closed</option>
+                <option value="Cancelled" <?= $selectedStatus == 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
             </select>
         </div>
 
@@ -182,26 +210,26 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
         <div id="upcomingEvents" class="grid grid-cols-3 gap-4 p-4">
             <?php if (count($upcomingEvents) > 0): ?>
                 <?php foreach ($upcomingEvents as $event): ?>
-                    <div class="bg-white shadow p-4 rounded relative group">
-                        <a href="./event-register.php?id_event=<?= $event['id_event'] ?>">
-                            <img src="<?= $event['banner'] ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
-                            <h3 class="text-xl font-bold"><?= $event['nama_event'] ?></h3>
-                            <p><?= $event['tanggal'] ?></p>
-                            <p><?= $event['lokasi'] ?></p>
+                    <div class="bg-white shadow p-4 rounded relative group <?= $event['status'] == 'Closed' ? 'opacity-50' : '' ?>">
+                        <a href="./admin-dashboard-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>">
+                            <img src="<?= htmlspecialchars($event['banner']) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
+                            <h3 class="text-xl font-bold"><?= htmlspecialchars($event['nama_event']) ?></h3>
+                            <p><?= htmlspecialchars($event['tanggal']) ?></p>
+                            <p><?= htmlspecialchars($event['lokasi']) ?></p>
                         </a>
 
                         <!-- Edit and Delete Buttons on Hover -->
                         <div class="absolute top-2 right-2 hidden group-hover:flex space-x-2">
-                            <a href="../event-management/edit-event.php?id_event=<?= $event['id_event'] ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
+                            <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
                             <form action="../event-management/edit-event-delete.php" method="POST">
-                                <input type="hidden" name="id_event" value="<?= $event['id_event'] ?>">
+                                <input type="hidden" name="id_event" value="<?= htmlspecialchars($event['id_event']) ?>">
                                 <button type="submit" class="bg-red-600 text-white p-2 rounded">Delete</button>
                             </form>
                         </div>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <p class="text-center col-span-3">No upcoming events found.</p>
+                <p class="text-center col-span-3">No events found.</p>
             <?php endif; ?>
         </div>
 
@@ -209,20 +237,19 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
         <div id="pastEvents" class="grid grid-cols-3 gap-4 p-4 hidden">
             <?php if (count($pastEvents) > 0): ?>
                 <?php foreach ($pastEvents as $event): ?>
-                    <div class="bg-white shadow p-4 rounded relative group">
-                        <a href="./event-register.php?id_event=<?= $event['id_event'] ?>">    
-                            <img src="<?= $event['banner'] ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
-                            <h3 class="text-xl font-bold"><?= $event['nama_event'] ?></h3>
-                            <p><?= $event['tanggal'] ?></p>
-                            <p><?= $event['lokasi'] ?></p>
+                    <div class="bg-white shadow p-4 rounded relative group opacity-50">
+                        <a href="./admin-dashboard-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>">
+                            <img src="<?= htmlspecialchars($event['banner']) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
+                            <h3 class="text-xl font-bold"><?= htmlspecialchars($event['nama_event']) ?></h3>
+                            <p><?= htmlspecialchars($event['tanggal']) ?></p>
+                            <p><?= htmlspecialchars($event['lokasi']) ?></p>
                         </a>
 
                         <!-- Edit and Delete Buttons on Hover -->
                         <div class="absolute top-2 right-2 hidden group-hover:flex space-x-2">
-                            <a href="../event-management/edit-event.php?id_event=<?= $event['id_event'] ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
-
+                            <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
                             <form action="../event-management/edit-event-delete.php" method="POST" >
-                                <input type="hidden" name="id_event" value="<?= $event['id_event'] ?>">
+                                <input type="hidden" name="id_event" value="<?= htmlspecialchars($event['id_event']) ?>">
                                 <button type="submit" class="bg-red-600 text-white p-2 rounded" onsubmit="return confirm('Are you sure you want to delete this event?');">Delete</button>
                             </form>
                         </div>
@@ -251,6 +278,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
 
         function applyFilters() {
             const locationFilter = document.getElementById('locationFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
             const startDate = document.getElementById('start-date').value;
             const endDate = document.getElementById('end-date').value;
             const searchQuery = document.getElementById('search').value;
@@ -259,6 +287,9 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
 
             if (locationFilter) {
                 url += 'location=' + encodeURIComponent(locationFilter) + '&';
+            }
+            if (statusFilter) {
+                url += 'status=' + encodeURIComponent(statusFilter) + '&';
             }
             if (startDate) {
                 url += 'start-date=' + encodeURIComponent(startDate) + '&';

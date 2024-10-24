@@ -3,8 +3,14 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['event_banner'])) {
     $target_dir = "../uploads/";
-    $target_file = $target_dir . basename($_FILES["event_banner"]["name"]);
+
+    // Sanitize the file name
+    $file_name = basename($_FILES["event_banner"]["name"]);
+    $file_name = preg_replace("/[^a-zA-Z0-9\.\-_]/", "", $file_name); // Allow only certain characters
+    $target_file = $target_dir . $file_name;
+
     $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
     // Check if file is an actual image
     $check = getimagesize($_FILES["event_banner"]["tmp_name"]);
@@ -15,16 +21,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['event_banner'])) {
         $uploadOk = 0;
     }
 
-    // Move the uploaded file to the uploads directory
-    if ($uploadOk == 1 && move_uploaded_file($_FILES["event_banner"]["tmp_name"], $target_file)) {
-        // Store file path in session
-        $_SESSION['event_banner'] = $target_file;
+    // Check if file already exists (optional, handle appropriately)
+    if (file_exists($target_file)) {
+        echo "Sorry, file already exists.";
+        $uploadOk = 0;
+    }
 
-        // Redirect to the review page
-        header('Location: create-event-review.php');
-        exit();
+    // Check file size (limit to 2MB)
+    if ($_FILES["event_banner"]["size"] > 2000000) {
+        echo "Sorry, your file is too large.";
+        $uploadOk = 0;
+    }
+
+    // Allow certain file formats
+    $allowed_types = ['jpg', 'png', 'jpeg', 'gif'];
+    if (!in_array($imageFileType, $allowed_types)) {
+        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+    }
+
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        echo "Sorry, your file was not uploaded.";
     } else {
-        echo "Sorry, there was an error uploading your file.";
+        // Rename the file to avoid conflicts (timestamp + sanitized file name)
+        $new_file_name = $target_dir . time() . "_" . $file_name;
+
+        // Move the uploaded file to the uploads directory
+        if (move_uploaded_file($_FILES["event_banner"]["tmp_name"], $new_file_name)) {
+            // Store sanitized file path in session
+            $_SESSION['event_banner'] = htmlspecialchars($new_file_name, ENT_QUOTES, 'UTF-8');
+
+            // Redirect to the review page
+            header('Location: create-event-review.php');
+            exit();
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
     }
 }
 ?>
@@ -46,7 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['event_banner'])) {
         }
 
         /* Styling the form inputs */
-
         label {
             display: block;
             margin-bottom: 8px;

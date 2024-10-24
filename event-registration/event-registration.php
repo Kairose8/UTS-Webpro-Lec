@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cancel'])) {
             <p><strong class="font-semibold">Event Time:</strong> <?= htmlspecialchars($event['waktu']) ?></p>
             <p><strong class="font-semibold">Event Location:</strong> <?= htmlspecialchars($event['lokasi']) ?></p>
             <p><strong class="font-semibold">Event Description:</strong> <?= htmlspecialchars($event['deskripsi']) ?></p>
-            <p><strong class="font-semibold">Capacity:</strong> <?= htmlspecialchars($event['jumlah_sekarang']) . '/' . htmlspecialchars($event['jumlah_maksimum']) ?></p>
+            <p><strong class="font-semibold">Registrants:</strong> <?= htmlspecialchars($event['jumlah_sekarang']) . '/' . htmlspecialchars($event['jumlah_maksimum']) ?></p>
         </div>
 
         <?php if ($event['jumlah_sekarang'] >= $event['jumlah_maksimum']): ?>
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cancel'])) {
                         Back to Event Browsing
                     </button>
                 </form>
-                
+
                 <?php if (!$userRegistered): ?>
                     <form action="event-register.php?id_event=<?= $event['id_event'] ?>" method="POST">
                         <button type="submit" name="register" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">

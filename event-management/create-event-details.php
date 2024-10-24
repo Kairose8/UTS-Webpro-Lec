@@ -1,14 +1,21 @@
 <?php
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $_SESSION['event_name'] = $_POST['event_name'];
-    $_SESSION['event_date'] = $_POST['event_date'];
-    $_SESSION['event_time'] = $_POST['event_time'];
-    $_SESSION['event_location'] = $_POST['event_location'];
-    $_SESSION['event_description'] = $_POST['event_description'];
-    $_SESSION['event_capacity'] = $_POST['event_capacity'];
+// Sanitize inputs to prevent XSS
+function sanitize_input($data) {
+    return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+}
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Sanitize and store user inputs to prevent XSS
+    $_SESSION['event_name'] = sanitize_input($_POST['event_name']);
+    $_SESSION['event_date'] = sanitize_input($_POST['event_date']);
+    $_SESSION['event_time'] = sanitize_input($_POST['event_time']);
+    $_SESSION['event_location'] = sanitize_input($_POST['event_location']);
+    $_SESSION['event_description'] = sanitize_input($_POST['event_description']);
+    $_SESSION['event_capacity'] = sanitize_input($_POST['event_capacity']);
+
+    // Redirect after form submission
     header('Location: create-event-banner.php');
     exit();
 }
@@ -47,59 +54,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
 
-        <!-- Form for Event Details -->
         <form action="create-event-details.php" method="POST" class="space-y-6">
 
-            <!-- Event Name -->
             <div>
                 <label for="event_name" class="block text-sm font-medium text-gray-700">Event Name:</label>
                 <input type="text" name="event_name" id="event_name" required
                     class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600">
             </div>
 
-            <!-- Event Date -->
             <div>
                 <label for="event_date" class="block text-sm font-medium text-gray-700">Event Date:</label>
                 <input type="date" name="event_date" id="event_date" required
                     class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600">
             </div>
 
-            <!-- Event Time -->
             <div>
                 <label for="event_time" class="block text-sm font-medium text-gray-700">Event Time:</label>
                 <input type="time" name="event_time" id="event_time" required
                     class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600">
             </div>
 
-            <!-- Event Location -->
             <div>
                 <label for="event_location" class="block text-sm font-medium text-gray-700">Location:</label>
                 <input type="text" name="event_location" id="event_location" required
                     class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600">
             </div>
 
-            <!-- Event Description -->
             <div>
                 <label for="event_description" class="block text-sm font-medium text-gray-700">Description:</label>
                 <textarea name="event_description" id="event_description" required
                     class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600"></textarea>
             </div>
 
-            <!-- Max Capacity -->
             <div>
                 <label for="event_capacity" class="block text-sm font-medium text-gray-700">Max Capacity:</label>
                 <input type="number" name="event_capacity" id="event_capacity" required
                     class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600">
             </div>
 
-            <!-- Buttons -->
             <div class="flex justify-between mt-6">
                 <a href="../admin-dashboard/admin-dashboard-index.php"
-                class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
+                   class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
                     Back to Dashboard
                 </a>
-                <button type="submit"
-                        class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
                     Next
                 </button>
             </div>
