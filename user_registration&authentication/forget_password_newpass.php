@@ -14,7 +14,7 @@
         <p class="text-2xl font-bold text-center mb-6">Enter New Password</p>
         <form action="forget_password_process.php" method="post">
             <div class="mb-4">
-                <input type="password" name="password" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input required type="password" name="password" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
             <div class="flex justify-center mb-4">
                 <button type="submit" class="bg-indigo-900 hover:bg-indigo-800 w-38 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">Change Password</button>

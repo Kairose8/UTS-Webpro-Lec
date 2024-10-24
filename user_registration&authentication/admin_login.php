@@ -17,15 +17,15 @@
     </div>
     <main class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
         <p id="form-title" class="text-2xl font-bold text-center mb-6">Admin</p>
-        <form id="auth-form" action="login_process.php" method="post" enctype="multipart/form-data">
+        <form id="auth-form" action="admin_login_process.php" method="post" enctype="multipart/form-data">
             <!-- For Login and Sign-up: Username -->
             <div class="mb-4" id="name-field">
-                <input type="text" id="username" name="username" placeholder="Username" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input required type="text" id="username" name="username" placeholder="Username" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
 
             <!-- For Login and Sign-up: Password -->
             <div class="mb-4" id="password-field">
-                <input type="password" id="password" name="password" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input required type="password" id="password" name="password" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
 
             <div class="flex justify-center mb-4">
