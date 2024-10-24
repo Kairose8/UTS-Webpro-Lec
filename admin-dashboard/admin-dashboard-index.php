@@ -116,6 +116,15 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
             transform: scale(1.05);
             color: white;
         }
+
+        #deleteModal {
+            display: none;
+        }
+
+        #deleteModal.flex {
+            display: flex;
+        }
+
     </style>
 </head>
 <body class="h-screen bg-gray-100">
@@ -210,7 +219,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
                             <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
                             <form action="../event-management/edit-event-delete.php" method="POST">
                                 <input type="hidden" name="id_event" value="<?= htmlspecialchars($event['id_event']) ?>">
-                                <button type="submit" class="bg-red-600 text-white p-2 rounded">Delete</button>
+                                <button type="button" onclick="showDeleteModal(<?= htmlspecialchars($event['id_event']) ?>)" class="bg-red-600 text-white p-2 rounded">Delete</button>
                             </form>
                         </div>
                     </div>
@@ -237,7 +246,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
                             <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
                             <form action="../event-management/edit-event-delete.php" method="POST" >
                                 <input type="hidden" name="id_event" value="<?= htmlspecialchars($event['id_event']) ?>">
-                                <button type="submit" class="bg-red-600 text-white p-2 rounded" onsubmit="return confirm('Are you sure you want to delete this event?');">Delete</button>
+                                <button type="button" onclick="showDeleteModal(<?= htmlspecialchars($event['id_event']) ?>)" class="bg-red-600 text-white p-2 rounded" onsubmit="return confirm('Are you sure you want to delete this event?');">Delete</button>
                             </form>
                         </div>
                     </div>
@@ -263,11 +272,12 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
                         <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
                         <form action="../event-management/edit-event-delete.php" method="POST">
                             <input type="hidden" name="id_event" value="<?= htmlspecialchars($event['id_event']) ?>">
-                            <button type="submit" class="bg-red-600 text-white p-2 rounded">Delete</button>
+                            <button type="button" onclick="showDeleteModal(<?= htmlspecialchars($event['id_event']) ?>)" type="submit" class="bg-red-600 text-white p-2 rounded">Delete</button>
                         </form>
                     </div>
                 </div>
             <?php endforeach; ?>
+            
             <?php foreach ($pastEvents as $event): ?>
                 <div class="bg-white shadow p-4 rounded relative group">
                     <a href="./admin-dashboard-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="opacity-50">
@@ -281,7 +291,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
                         <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
                         <form action="../event-management/edit-event-delete.php" method="POST">
                             <input type="hidden" name="id_event" value="<?= htmlspecialchars($event['id_event']) ?>">
-                            <button type="submit" class="bg-red-600 text-white p-2 rounded">Delete</button>
+                            <button type="button" onclick="showDeleteModal(<?= htmlspecialchars($event['id_event']) ?>)" type="submit" class="bg-red-600 text-white p-2 rounded">Delete</button>
                         </form>
                     </div>
                 </div>
@@ -289,11 +299,29 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
         <?php endif; ?>
 
+        <!-- Modal Structure for Delete Confirmation -->
+        <div id="deleteModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+            <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+                <h2 class="text-xl font-bold mb-4">Are you sure?</h2>
+                <p class="mb-6">Do you really want to delete this event?</p>
+                <div class="flex justify-end space-x-4">
+                    <button id="cancelButton" class="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded-lg">Cancel</button>
+                    <form id="deleteForm" action="../event-management/edit-event-delete.php" method="POST">
+                        <input type="hidden" name="id_event" id="deleteEventId">
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- Add Event Button -->
-        <a href="../event-management/create-event-details.php" class="fixed bottom-7 right-7  text-xl bg-green-600 text-white p-3 rounded-full shadow-lg hover:bg-green-700 transition duration-300">
+        <a href="../event-management/create-event-details.php" class="fixed bottom-24 right-7 text-xl bg-green-500 text-white p-3 rounded-lg shadow-lg hover:bg-green-600 transition duration-300">
             Add Event
         </a>
-
+        
+        <a href="../user_management/view_users.php" class="fixed bottom-7 right-7 text-xl bg-blue-500 text-white p-3 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300">
+            Manage Users
+        </a>
     </div>
 
     <script>
@@ -375,6 +403,8 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
 
         window.onload = function () {
             // Check if filters are applied (based on PHP variable passed)
+            hideDeleteModal(); // Ensure the modal is hidden by default
+
             const filtersApplied = <?= json_encode($filtersApplied) ?>;
 
             // If no filters are applied, remove active styles from both tabs
@@ -386,6 +416,35 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
                 document.getElementById("pastTab").classList.add("bg-slate-200", "text-black");
             }
         };
+
+        // Function to show the modal
+        function showDeleteModal(eventId) {
+            const modal = document.getElementById('deleteModal');
+            const deleteEventId = document.getElementById('deleteEventId');
+            deleteEventId.value = eventId; // Set the event ID in the form
+            modal.classList.remove('hidden'); // Show the modal
+            modal.classList.add('flex');     // Display modal flexibly
+        }
+
+        // Function to hide the modal
+        function hideDeleteModal() {
+            const modal = document.getElementById('deleteModal');
+            modal.classList.add('hidden');  // Hide the modal
+            modal.classList.remove('flex'); // Remove the flex display
+        }
+
+        // When the Cancel button is clicked, hide the modal
+        document.getElementById('cancelButton').addEventListener('click', function () {
+            hideDeleteModal();
+        });
+
+        // Optional: Hide the modal if the user clicks outside of it
+        // window.addEventListener('click', function (event) {
+        //     const modal = document.getElementById('deleteModal');
+        //     if (event.target === modal) {
+        //         hideDeleteModal();
+        //     }
+        // });
 
     </script>
 </body>

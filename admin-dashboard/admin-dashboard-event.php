@@ -47,7 +47,7 @@ if (!$event) {
                 <!-- Back Button -->
                 <form action="./admin-dashboard-index.php" method="GET">
                     <button type="submit" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
-                        Back to Event Browsing
+                        Back to Admin Dashboard
                     </button>
                 </form>
                 

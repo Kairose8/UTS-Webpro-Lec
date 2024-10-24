@@ -20,7 +20,7 @@ $stmt->execute();
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-10 ">
-        <h1 class="text-2xl font-bold text-center mb-8">User Management</h1>
+        <h1 class="text-3xl font-bold text-center mb-8">User Management</h1>
         
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
@@ -40,7 +40,7 @@ $stmt->execute();
                         <td class="py-4 px-6"><?= htmlspecialchars($peserta['nama'])?></td>
                         <td class="py-4 px-6"><?= htmlspecialchars($peserta['email'])?></td>
                         <td class="py-4 px-6">
-                        <img src="<?= !empty($peserta['profile_pic']) ? '../uploads/profile_photo/' . htmlspecialchars($peserta['profile_pic']) : '../assets/default_profile.jpg' ?>" 
+                        <img src="<?= htmlspecialchars($peserta['profile_pic']) ?>" 
                                 alt="Profile picture of <?= htmlspecialchars($peserta['nama']) ?>" 
                                 class="w-16 h-16 rounded-full object-cover"/>
                         </td>
@@ -89,6 +89,14 @@ $stmt->execute();
                 <button id="confirm-btn" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg">Delete</button>
             </div>
         </div>
+    </div>
+
+    <div class="flex justify-center mb-6 -mt-5 text-xl">
+        <form action="../admin-dashboard/admin-dashboard-index.php" method="GET">
+            <button type="submit" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
+                Back to Admin Dashboard
+            </button>
+        </form>
     </div>
 </body>
 </html>
