@@ -13,10 +13,10 @@ $stmt = $pdo->prepare($sql);
 $stmt->bindParam(":username", $username);
 $stmt->execute();
 
-$user - $stmt-> fetch();
+$user = $stmt->fetch();
 
 if ($user) {
-    if (password_verify($password, $user['$password'])) {
+    if (password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
         header("Location: admin-dashboard-index.php");
