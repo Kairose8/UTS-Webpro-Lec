@@ -37,17 +37,18 @@ $event = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>View Profile</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="flex flex-col lg:flex-row gap-8 max-w-5xl w-full">
-
-        <!-- Profile Container -->
-        <div class="bg-white p-8 rounded-lg shadow-lg flex-1">
-            <h1 class="text-3xl font-bold mb-4 text-gray-800">Account Information</h1>
+<body class="bg-gray-100">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="flex flex-col lg:flex-row gap-8 max-w-5xl w-full">
+            
+            <!-- Profile Container -->
+            <div class="bg-white p-8 rounded-lg shadow-lg flex-1">
+                <h1 class="text-3xl font-bold mb-4 text-gray-800">Account Information</h1>
             <hr class="mb-6"/>
 
             <!-- Profile Photo Section -->
             <h2 class="text-xl font-semibold mb-2 text-gray-700">Profile Photo</h2>
-            <img src="<?= !empty($profile['profile_pic']) ? '../uploads/profile_photo/' . htmlspecialchars($profile['profile_pic']) : '../assets/default_profile.jpg' ?>" 
+            <img src="<?= htmlspecialchars($profile['profile_pic'])?>" 
                  alt="Your Profile Photo" 
                  class="rounded-full w-64 h-64 object-cover mb-6 mx-auto">
 
@@ -63,34 +64,42 @@ $event = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </a>
         </div>
 
-        <!-- Event History Container -->
-        <div class="bg-white p-8 rounded-lg shadow-lg flex-1">
-            <h1 class="text-3xl font-bold mb-4 text-gray-800">Event History</h1>
-            <hr class="border-gray-300 mb-6"/>
+            <!-- Event History Container -->
+            <div class="bg-white p-8 rounded-lg shadow-lg flex-1">
+                <h1 class="text-3xl font-bold mb-4 text-gray-800">Event History</h1>
+                <hr class="border-gray-300 mb-6"/>
+                
+                <div class="h-96 overflow-y-auto">
+                    <!-- Event List -->
+                    <ul class="space-y-6">
+                        <?php foreach ($event as $event): ?>
+                            <li class="text-base text-gray-700 bg-gray-50 p-4 rounded-lg shadow-sm">
+                                <strong class="block text-gray-900 font-semibold mb-1">Event Name:</strong> 
+                                <?= htmlspecialchars($event['nama_event']) ?> 
+                                <br>
+                                <strong class="block text-gray-900 font-semibold mt-2">Date:</strong> 
+                                <?= htmlspecialchars($event['tanggal_formated']) ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
 
-            <div class="h-96 overflow-y-auto">
-                <!-- Event List -->
-                <ul class="space-y-6">
-                    <?php foreach ($event as $event): ?>
-                        <li class="text-base text-gray-700 bg-gray-50 p-4 rounded-lg shadow-sm">
-                            <strong class="block text-gray-900 font-semibold mb-1">Event Name:</strong> 
-                            <?= htmlspecialchars($event['nama_event']) ?> 
-                            <br>
-                            <strong class="block text-gray-900 font-semibold mt-2">Date:</strong> 
-                            <?= htmlspecialchars($event['tanggal_formated']) ?>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-
-            <div class="text-right mt-8">
-                <a href="../user_management/user_history.php?id_user=<?= htmlspecialchars($profile['id_user'])?>" 
-                class="inline-block bg-slate-800 text-white font-semibold py-2 px-6 rounded-lg shadow-lg hover:bg-slate-700 transition-all duration-300">
-                More Detail
-                </a>
+                <div class="text-right mt-8">
+                    <a href="../user_management/user_history.php?id_user=<?= htmlspecialchars($profile['id_user'])?>" 
+                    class="inline-block bg-slate-800 text-white font-semibold py-2 px-6 rounded-lg shadow-lg hover:bg-slate-700 transition-all duration-300">
+                    More Detail
+                    </a>
+                </div>
             </div>
         </div>
-
+    </div>
+    
+    <div class="flex justify-center mb-6 -mt-32 text-xl">
+        <form action="../event-browsing/event-browsing.php" method="GET">
+            <button type="submit" class="mr-5 bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
+                To Browse Events
+            </button>
+        </form>
     </div>
 </body>
 </html>
