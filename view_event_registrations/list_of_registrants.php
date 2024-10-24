@@ -66,7 +66,7 @@ $data_event = $stmt->fetch(PDO::FETCH_ASSOC);
         <div class="flex justify-center content-center items-center mt-5">
             <form action="../admin-dashboard/admin-dashboard-index.php" method="GET">
                 <button type="submit"
-                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+                    class="bg-slate-800 text-white px-6 py-2 rounded-lg hover:bg-slate-700 transition duration-300">
                     Back to Dashboard
                 </button>
             </form>

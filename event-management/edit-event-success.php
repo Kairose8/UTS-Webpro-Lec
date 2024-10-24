@@ -27,7 +27,7 @@
         <!-- Back to Dashboard Button -->
         <form action="../admin-dashboard/admin-dashboard-index.php" method="GET">
             <button type="submit"
-                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+                    class="bg-slate-800 text-white px-6 py-2 rounded-lg hover:bg-slate-700 transition duration-300">
                 Back to Dashboard
             </button>
         </form>

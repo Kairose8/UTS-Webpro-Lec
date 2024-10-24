@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </li>
             </ul>
             <div class="progress-bar bg-gray-300 w-full h-1 rounded-full relative">
-                <div class="active-bar bg-blue-600 h-1 rounded-full" style="width: 25%;"></div>
+                <div class="active-bar bg-slate-800 h-1 rounded-full" style="width: 25%;"></div>
             </div>
         </div>
 
@@ -59,37 +59,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div>
                 <label for="event_name" class="block text-sm font-medium text-gray-700">Event Name:</label>
                 <input type="text" name="event_name" id="event_name" required
-                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600">
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-slate-800 focus:border-slate-800">
             </div>
 
             <div>
                 <label for="event_date" class="block text-sm font-medium text-gray-700">Event Date:</label>
                 <input type="date" name="event_date" id="event_date" required
-                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600">
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-slate-800 focus:border-slate-800">
             </div>
 
             <div>
                 <label for="event_time" class="block text-sm font-medium text-gray-700">Event Time:</label>
                 <input type="time" name="event_time" id="event_time" required
-                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600">
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-slate-800 focus:border-slate-800">
             </div>
 
             <div>
                 <label for="event_location" class="block text-sm font-medium text-gray-700">Location:</label>
                 <input type="text" name="event_location" id="event_location" required
-                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600">
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-slate-800 focus:border-slate-800">
             </div>
 
             <div>
                 <label for="event_description" class="block text-sm font-medium text-gray-700">Description:</label>
                 <textarea name="event_description" id="event_description" required
-                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600"></textarea>
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-slate-800 focus:border-slate-800"></textarea>
             </div>
 
             <div>
                 <label for="event_capacity" class="block text-sm font-medium text-gray-700">Max Capacity:</label>
                 <input type="number" name="event_capacity" id="event_capacity" required
-                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600">
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-slate-800 focus:border-slate-800">
             </div>
 
             <div class="flex justify-between mt-6">
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                    class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
                     Back to Dashboard
                 </a>
-                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                <button type="submit" class="bg-slate-800 text-white px-6 py-2 rounded-lg hover:bg-slate-700 transition">
                     Next
                 </button>
             </div>

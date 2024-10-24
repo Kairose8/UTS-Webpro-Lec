@@ -27,13 +27,13 @@ if (isset($_GET['id_event'])) {
     <title>Edit Event</title>
     <link href="../style/output.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+<body class="bg-gray-100 p-10 flex justify-center items-center min-h-screen">
 
     <!-- Main Container -->
     <div class="bg-white p-10 rounded-lg shadow-lg max-w-4xl w-full">
 
         <!-- Header -->
-        <h1 class="text-2xl font-bold text-blue-600 mb-6 text-center">Edit Event: <?php echo $event['nama_event']; ?></h1>
+        <h1 class="text-2xl font-bold text-slate-800 mb-6 text-center">Edit Event: <?php echo $event['nama_event']; ?></h1>
 
         <!-- Edit Event Form -->
         <form action="edit-event-insertdb.php" method="POST" enctype="multipart/form-data" class="space-y-6">
@@ -44,42 +44,42 @@ if (isset($_GET['id_event'])) {
             <div>
                 <label for="event_name" class="block text-sm font-medium text-gray-700">Event Name:</label>
                 <input type="text" name="event_name" id="event_name" value="<?php echo $event['nama_event']; ?>" required
-                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600">
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-slate-800 focus:border-slate-800">
             </div>
 
             <!-- Event Date -->
             <div>
                 <label for="event_date" class="block text-sm font-medium text-gray-700">Event Date:</label>
                 <input type="date" name="event_date" id="event_date" value="<?php echo $event['tanggal']; ?>" required
-                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600">
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-slate-800 focus:border-slate-800">
             </div>
 
             <!-- Event Location -->
             <div>
                 <label for="event_location" class="block text-sm font-medium text-gray-700">Location:</label>
                 <input type="text" name="event_location" id="event_location" value="<?php echo $event['lokasi']; ?>" required
-                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600">
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-slate-800 focus:border-slate-800">
             </div>
 
             <!-- Event Description -->
             <div>
                 <label for="event_description" class="block text-sm font-medium text-gray-700">Description:</label>
                 <textarea name="event_description" id="event_description" required
-                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600"><?php echo $event['deskripsi']; ?></textarea>
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-slate-800 focus:border-slate-800"><?php echo $event['deskripsi']; ?></textarea>
             </div>
 
             <!-- Max Capacity -->
             <div>
                 <label for="event_capacity" class="block text-sm font-medium text-gray-700">Max Capacity:</label>
                 <input type="number" name="event_capacity" id="event_capacity" value="<?php echo $event['jumlah_maksimum']; ?>" required
-                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600">
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-slate-800 focus:border-slate-800">
             </div>
 
             <!-- Event Status -->
             <div>
                 <label for="event_status" class="block text-sm font-medium text-gray-700">Status:</label>
                 <select name="event_status" id="event_status"
-                        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600">
+                        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-slate-800 focus:border-slate-800">
                     <option value="Open" <?php if ($event['status'] == 'Open') echo 'selected'; ?>>Open</option>
                     <option value="Closed" <?php if ($event['status'] == 'Closed') echo 'selected'; ?>>Closed</option>
                     <option value="Cancelled" <?php if ($event['status'] == 'Cancelled') echo 'selected'; ?>>Cancelled</option>
@@ -101,7 +101,7 @@ if (isset($_GET['id_event'])) {
                         Delete Event
                     </button>
                 </form>
-                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                <button type="submit" class="bg-green-800 text-white px-6 py-2 rounded-lg hover:bg-slate-700 transition">
                     Update Event
                 </button>
 
