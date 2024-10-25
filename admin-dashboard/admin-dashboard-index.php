@@ -173,7 +173,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
 
         <!-- Apply and Reset Filter Buttons -->
         <div class="p-4">
-            <button onclick="applyFilters()" class="bg-blue-600 p-2 rounded w-full">Apply Filters</button>
+            <button onclick="applyFilters()" class="bg-slate-800 p-2 rounded w-full">Apply Filters</button>
             <button onclick="resetFilters()" class="bg-red-600 p-2 rounded w-full mt-2">Reset Filters</button>
         </div>
     </div>
@@ -191,14 +191,14 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
 
         <!-- Search Bar (Centered in Main Content) -->
         <div class="flex justify-center my-8">
-            <input type="text" id="search" name="search" class="w-full md:w-1/2 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600" placeholder="Search events" value="<?= $searchQuery ?>" />
-            <button onclick="applyFilters()" class="ml-3 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Search</button>
+            <input type="text" id="search" name="search" class="w-full md:w-1/2 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-slate-800 focus:border-slate-800" placeholder="Search events" value="<?= $searchQuery ?>" />
+            <button onclick="applyFilters()" class="ml-3 bg-slate-800 text-white px-4 py-2 rounded-lg hover:bg-slate-700 transition">Search</button>
         </div>
 
         <!-- Tabs for Upcoming and Past Events (Hidden if filters applied) -->
         <?php if (!$filtersApplied): ?>
         <div class="flex justify-center my-4">
-            <button id="upcomingTab" onclick="showUpcoming()" class="p-4 text-lg font-semibold transition-all duration-300 bg-blue-600 text-white rounded-l-lg">Upcoming Events</button>
+            <button id="upcomingTab" onclick="showUpcoming()" class="p-4 text-lg font-semibold transition-all duration-300 bg-slate-800 text-white rounded-l-lg">Upcoming Events</button>
             <button id="pastTab" onclick="showPast()" class="p-4 text-lg font-semibold transition-all duration-300 bg-slate-200 text-black rounded-r-lg">Past Events</button>
         </div>
         <?php endif; ?>
@@ -217,7 +217,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <!-- Edit and Delete Buttons on Hover -->
                         <div class="absolute top-2 right-2 hidden group-hover:flex space-x-2">
-                            <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
+                            <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-slate-800 text-white p-2 rounded">Edit</a>
                             <form action="../event-management/edit-event-delete.php" method="POST">
                                 <input type="hidden" name="id_event" value="<?= htmlspecialchars($event['id_event']) ?>">
                                 <button type="button" onclick="showDeleteModal(<?= htmlspecialchars($event['id_event']) ?>)" class="bg-red-600 text-white p-2 rounded">Delete</button>
@@ -244,7 +244,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <!-- Edit and Delete Buttons on Hover -->
                         <div class="absolute top-2 right-2 hidden group-hover:flex space-x-2">
-                            <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
+                            <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-slate-800 text-white p-2 rounded">Edit</a>
                             <form action="../event-management/edit-event-delete.php" method="POST" >
                                 <input type="hidden" name="id_event" value="<?= htmlspecialchars($event['id_event']) ?>">
                                 <button type="button" onclick="showDeleteModal(<?= htmlspecialchars($event['id_event']) ?>)" class="bg-red-600 text-white p-2 rounded" onsubmit="return confirm('Are you sure you want to delete this event?');">Delete</button>
@@ -270,7 +270,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
                     </a>
                     <!-- Edit and Delete Buttons for Filtered Events -->
                     <div class="absolute top-2 right-2 hidden group-hover:flex space-x-2">
-                        <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
+                        <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-slate-800 text-white p-2 rounded">Edit</a>
                         <form action="../event-management/edit-event-delete.php" method="POST">
                             <input type="hidden" name="id_event" value="<?= htmlspecialchars($event['id_event']) ?>">
                             <button type="button" onclick="showDeleteModal(<?= htmlspecialchars($event['id_event']) ?>)" type="submit" class="bg-red-600 text-white p-2 rounded">Delete</button>
@@ -289,7 +289,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
                     </a>
                     <!-- Edit and Delete Buttons for Filtered Past Events -->
                     <div class="absolute top-2 right-2 hidden group-hover:flex space-x-2">
-                        <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-blue-600 text-white p-2 rounded">Edit</a>
+                        <a href="../event-management/edit-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-slate-800 text-white p-2 rounded">Edit</a>
                         <form action="../event-management/edit-event-delete.php" method="POST">
                             <input type="hidden" name="id_event" value="<?= htmlspecialchars($event['id_event']) ?>">
                             <button type="button" onclick="showDeleteModal(<?= htmlspecialchars($event['id_event']) ?>)" type="submit" class="bg-red-600 text-white p-2 rounded">Delete</button>
@@ -320,7 +320,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
             Add Event
         </a>
         
-        <a href="../user_management/view_users.php" class="fixed bottom-7 right-7 text-xl bg-blue-500 text-white p-3 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300">
+        <a href="../user_management/view_users.php" class="fixed bottom-7 right-7 text-xl bg-blue-500 text-white p-3 rounded-lg shadow-lg hover:bg-slate-800 transition duration-300">
             Manage Users
         </a>
     </div>
@@ -367,10 +367,10 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
             window.location.href = 'admin-dashboard-index.php';
 
             // Remove active styling from both tabs
-            document.getElementById("upcomingTab").classList.remove("bg-blue-600", "text-white");
+            document.getElementById("upcomingTab").classList.remove("bg-slate-800", "text-white");
             document.getElementById("upcomingTab").classList.add("bg-slate-200", "text-black");
 
-            document.getElementById("pastTab").classList.remove("bg-blue-600", "text-white");
+            document.getElementById("pastTab").classList.remove("bg-slate-800", "text-white");
             document.getElementById("pastTab").classList.add("bg-slate-200", "text-black");
         }
 
@@ -380,11 +380,11 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
             document.getElementById("pastEvents").classList.add("hidden");
 
             // Apply active styles to the upcoming tab
-            document.getElementById("upcomingTab").classList.add("bg-blue-600", "text-white");
+            document.getElementById("upcomingTab").classList.add("bg-slate-800", "text-white");
             document.getElementById("upcomingTab").classList.remove("bg-slate-200", "text-black");
 
             // Reset past tab to inactive styles
-            document.getElementById("pastTab").classList.remove("bg-blue-600", "text-white");
+            document.getElementById("pastTab").classList.remove("bg-slate-800", "text-white");
             document.getElementById("pastTab").classList.add("bg-slate-200", "text-black");
         }
 
@@ -394,11 +394,11 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
             document.getElementById("pastEvents").classList.remove("hidden");
 
             // Apply active styles to the past tab
-            document.getElementById("pastTab").classList.add("bg-blue-600", "text-white");
+            document.getElementById("pastTab").classList.add("bg-slate-800", "text-white");
             document.getElementById("pastTab").classList.remove("bg-slate-200", "text-black");
 
             // Reset upcoming tab to inactive styles
-            document.getElementById("upcomingTab").classList.remove("bg-blue-600", "text-white");
+            document.getElementById("upcomingTab").classList.remove("bg-slate-800", "text-white");
             document.getElementById("upcomingTab").classList.add("bg-slate-200", "text-black");
         }
 
@@ -410,10 +410,10 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
 
             // If no filters are applied, remove active styles from both tabs
             if (!filtersApplied) {
-                document.getElementById("upcomingTab").classList.remove("bg-blue-600", "text-white");
+                document.getElementById("upcomingTab").classList.remove("bg-slate-800", "text-white");
                 document.getElementById("upcomingTab").classList.add("bg-slate-200", "text-black");
 
-                document.getElementById("pastTab").classList.remove("bg-blue-600", "text-white");
+                document.getElementById("pastTab").classList.remove("bg-slate-800", "text-white");
                 document.getElementById("pastTab").classList.add("bg-slate-200", "text-black");
             }
         };

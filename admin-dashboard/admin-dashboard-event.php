@@ -26,7 +26,7 @@ if (!$event) {
 </head>
 <body class="bg-gray-100 flex justify-center items-center min-h-screen text-lg">
     <div class="bg-white p-10 rounded-lg shadow-lg max-w-4xl w-full mt-8">
-        <h1 class="text-2xl font-bold text-blue-600 mb-6 text-center">Event Details</h1>
+        <h1 class="text-2xl font-bold text-slate-800 mb-6 text-center">Event Details</h1>
         
     <div class="h-32 w-full">
         <img src="<?= htmlspecialchars($event['banner']) ?>" alt="Event Banner" 
@@ -54,7 +54,7 @@ if (!$event) {
                 <!-- Form to view registrants -->
                 <form action="../view_event_registrations/list_of_registrants.php" method="GET">
                     <input type="hidden" name="id_event" value="<?= htmlspecialchars($event['id_event']) ?>">
-                    <button type="submit" name="registrant" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                    <button type="submit" name="registrant" class="bg-slate-800 text-white px-6 py-2 rounded-lg hover:bg-slate-700 transition">
                         View Registrants
                     </button>
                 </form>

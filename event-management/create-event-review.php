@@ -34,12 +34,12 @@ function sanitize_output($data) {
                 </li>
             </ul>
             <div class="progress-bar bg-gray-300 w-full h-1 rounded-full relative">
-                <div class="active-bar bg-blue-600 h-1 rounded-full" style="width:100%"></div>
+                <div class="active-bar bg-slate-800 h-1 rounded-full" style="width:100%"></div>
             </div>
         </div>
 
         <!-- Review Section -->
-        <h1 class="text-2xl font-bold text-blue-600 mb-6 text-center">Review Event Details</h1>
+        <h1 class="text-2xl font-bold text-slate-800 mb-6 text-center">Review Event Details</h1>
 
         <!-- Event Information -->
         <div class="space-y-4">
@@ -66,7 +66,7 @@ function sanitize_output($data) {
             </form>
 
             <form action="create-event-insertdb.php" method="POST">
-                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                <button type="submit" class="bg-slate-800 text-white px-6 py-2 rounded-lg hover:bg-slate-700 transition">
                     Confirm and Create Event
                 </button>
             </form>
