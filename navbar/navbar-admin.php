@@ -20,7 +20,12 @@
 
     <!-- Right side: Admin Greeting -->
     <div class="text-white text-2xl">
-        Hello, Admin
+        Hello, Admin!
+    </div>
+    <div class="flex items-center">
+            <a href="../login/logout_process.php" class="ml-5 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                Logout
+            </a>
     </div>
 </nav>
 

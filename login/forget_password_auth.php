@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Check if user was found
         if ($user) {
-            $_SESSION['user_id'] = $user['id_user']; // Save user id in session for later use
+            $_SESSION['id_user'] = $user['id_user']; // Save user id in session for later use
             header('Location: forget_password_newpass.php');
             exit;
         } else {

@@ -17,8 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($user && password_verify($password, $user['password'])) { // Assuming password is hashed
             // Start a session and set user data
             session_start();
-            $_SESSION['user_id'] = $user['id']; // Assuming you have an 'id' field
-
+            $_SESSION['id_user'] = $user['id_user']; // Assuming you have an 'id' field
+            
             // Redirect to the event browsing page
             header('Location: ../index1.php'); // Adjusted path to the correct event-browsing page
             exit;
