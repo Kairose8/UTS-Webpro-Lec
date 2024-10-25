@@ -9,7 +9,7 @@
 <body>
 
 <!-- Admin Navbar -->
-<nav class="bg-gray-700 p-4 shadow-md flex justify-around items-center">
+<nav class="bg-gray-800 p-4 shadow-md flex justify-around items-center">
     <!-- Left side: Website Logo and Name -->
     <div class="flex items-center">
         <a href="../admin-dashboard/admin-dashboard-index.php" class="flex items-center">
