@@ -3,7 +3,7 @@ session_start(); // Start the session
 
 // Check if user is already logged in, if yes then redirect to the event browsing page
 if (isset($_SESSION['id_user'])) {
-    header("Location: ../index1.php");
+    header("Location: ../index.php");
     exit;
 }
 ?>

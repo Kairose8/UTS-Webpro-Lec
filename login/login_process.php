@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['id_user'] = $user['id_user']; // Assuming you have an 'id' field
             
             // Redirect to the event browsing page
-            header('Location: ../index1.php'); // Adjusted path to the correct event-browsing page
+            header('Location: ../index.php'); // Adjusted path to the correct event-browsing page
             exit;
         } else {
             // Redirect to login page with error message
