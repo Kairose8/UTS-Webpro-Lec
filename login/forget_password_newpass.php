@@ -3,7 +3,7 @@ session_start();
 include '../db_conn.php'; // Adjust the path if necessary
 
 // Check if user is logged in (i.e., if they passed the previous step)
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['id_user'])) {
     header('Location: forget_password.php'); // Redirect if accessed directly
     exit;
 }
@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 // Handle form submission for new password
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_password = $_POST['new_password'] ?? '';
-    $user_id = $_SESSION['user_id']; // Get user id from session
+    $id_user = $_SESSION['id_user']; // Get user id from session
 
     // Hash the new password
     $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Update the password in the database
         $stmt = $conn->prepare("UPDATE user SET password = :password WHERE id_user = :id");
         $stmt->bindValue(':password', $hashed_password);
-        $stmt->bindValue(':id', $user_id);
+        $stmt->bindValue(':id', $id_user);
         $stmt->execute();
 
         // Password updated, clear the session and redirect to login

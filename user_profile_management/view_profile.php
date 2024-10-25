@@ -85,7 +85,7 @@ $event = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
 
                 <div class="text-right mt-8">
-                    <a href="../user_management/user_history.php?id_user=<?= htmlspecialchars($profile['id_user'])?>" 
+                    <a href="user_history.php?id_user=<?= htmlspecialchars($profile['id_user'])?>" 
                     class="inline-block bg-slate-800 text-white font-semibold py-2 px-6 rounded-lg shadow-lg hover:bg-slate-700 transition-all duration-300">
                     More Detail
                     </a>
@@ -95,7 +95,7 @@ $event = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
     
     <div class="flex justify-center mb-6 -mt-32 text-xl">
-        <form action="../event-browsing/event-browsing.php" method="GET">
+        <form action="../index.php" method="GET">
             <button type="submit" class="mr-5 bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
                 To Browse Events
             </button>
