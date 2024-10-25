@@ -18,7 +18,7 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <body class="bg-gray-100 flex items-center justify-center h-screen">
     <a href="admin_login.php" class="absolute top-5 right-5 bg-indigo-900 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded-md">
-        Admin Dashboard
+        Admin Page
     </a>
     <main class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
         <p class="text-2xl font-bold text-center mb-6">Login</p>
@@ -39,10 +39,17 @@ if (isset($_SESSION['user_id'])) {
                 <button type="submit" class="bg-indigo-900 hover:bg-indigo-800 w-28 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">Login</button>
             </div>
         </form>
-        <p class="text-center text-gray-600">Belum punya akun? | Lupa Password?</p>
-        <div class="flex justify-center">
+        <div class="flex justify-center text-lg -mt-3">
             <a href="signup.php" class="text-indigo-900 hover:cursor-pointer pr-2">Daftar di sini</a>
-            <a href="forget_password.php" class="text-indigo-900 hover:cursor-pointer">| Ganti password</a>
+            <a href="forget_password.php" class="text-indigo-900 hover:cursor-pointer">| Lupa Password</a>
+        </div>
+        <div class="flex justify-center mt-6">
+            <form action="../index.php" method="GET">
+                <button type="submit"
+                        class="bg-slate-800 text-white px-6 py-2 rounded-lg hover:bg-slate-700 transition duration-300">
+                    Browse Events as Guest
+                </button>
+            </form>
         </div>
     </main>
 </body>

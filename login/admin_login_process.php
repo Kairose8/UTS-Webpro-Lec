@@ -19,7 +19,7 @@ if ($user) {
     if (password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
-        header("Location: admin-dashboard-index.php");
+        header("Location: ../admin-dashboard/admin-dashboard-index.php");
         exit;
     } else {
         echo "Invalid Password.";

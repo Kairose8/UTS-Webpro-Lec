@@ -34,7 +34,7 @@ if ($isLoggedIn) {
                 Logout
             </a>
         <?php else: ?>
-            <a href="../login/login.php" class="ml-5 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+            <a href="./login/login.php" class="ml-5 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                 Login
             </a>
         <?php endif; ?>

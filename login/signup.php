@@ -43,8 +43,7 @@ session_start(); // Start the session
                 <button type="submit" class="bg-indigo-900 hover:bg-indigo-800 w-28 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">Sign Up</button>
             </div>
         </form>
-        <p class="text-center text-gray-600">Sudah punya akun? | Lupa Password?</p>
-        <div class="flex justify-center">
+        <div class="flex justify-center text-lg">
             <a href="login.php" class="text-indigo-900 hover:cursor-pointer pr-2">Login di sini</a>
             <a href="forget_password.php" class="text-indigo-900 hover:cursor-pointer">| Ganti password</a>
         </div>

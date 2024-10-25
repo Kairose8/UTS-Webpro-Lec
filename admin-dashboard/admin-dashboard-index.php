@@ -180,14 +180,11 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Main Content -->
     <div id="main-content" class="transition-all duration-300 ml-0 pl-0">
-        <header class="flex justify-between items-center p-4 bg-white shadow">
-            <h1 class="text-2xl font-bold ml-7">Admin Dashboard</h1>
             <button id="toggle-sidebar" onclick="toggleSidebar()" class="top-5 left-4 z-30 absolute">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                 </svg>
             </button>
-        </header>
 
         <!-- Search Bar (Centered in Main Content) -->
         <div class="flex justify-center my-8">

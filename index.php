@@ -135,7 +135,7 @@ $upcomingEvents = $upcomingStmt->fetchAll(PDO::FETCH_ASSOC);
             <?php if (count($upcomingEvents) > 0): ?>
                 <?php foreach ($upcomingEvents as $event): ?>
                     <a href="./event-registration/event-registration.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-white shadow p-4 rounded relative group hover:bg-gray-100 transition">
-                        <img src="<?= htmlspecialchars($event['banner']) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
+                        <img src="<?= htmlspecialchars(ltrim($event['banner'], './')) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
                         <h3 class="text-xl font-bold"><?= htmlspecialchars($event['nama_event']) ?></h3>
                         <p><?= htmlspecialchars($event['tanggal']) ?></p>
                         <p><?= htmlspecialchars($event['lokasi']) ?></p>
@@ -159,7 +159,7 @@ $upcomingEvents = $upcomingStmt->fetchAll(PDO::FETCH_ASSOC);
             const startDate = document.getElementById('start-date').value;
             const endDate = document.getElementById('end-date').value;
             const searchQuery = document.getElementById('search').value;
-            let url = 'index1.php?';
+            let url = 'index.php?';
             if (locationFilter) {
                 url += 'location=' + encodeURIComponent(locationFilter) + '&';
             }
@@ -175,7 +175,7 @@ $upcomingEvents = $upcomingStmt->fetchAll(PDO::FETCH_ASSOC);
             window.location.href = url;
         }
         function resetFilters() {
-            window.location.href = 'index1.php';
+            window.location.href = 'index.php';
         }
     </script>
 </body>
