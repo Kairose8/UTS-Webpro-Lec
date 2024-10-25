@@ -27,7 +27,7 @@ if ($isLoggedIn) {
     <div class="flex items-center">
         <?php if ($isLoggedIn && $user): ?>
             <span>Hello, <?= htmlspecialchars($user['nama']) ?></span>
-            <a href="../user_profile_management/view_profile.php?id_user=<?= htmlspecialchars($id_user) ?>">
+            <a href="../index1.php?id_user=<?= htmlspecialchars($id_user) ?>">
                 <img src="<?= htmlspecialchars($user['profile_pic']) ?>" alt="Profile Picture" class="w-10 h-10 rounded-full ml-4">
             </a>
             <a href="./login/logout_process.php" class="ml-5 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">

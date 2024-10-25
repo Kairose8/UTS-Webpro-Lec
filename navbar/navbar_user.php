@@ -38,7 +38,7 @@ if ($id_user) {
     <!-- Right side: User Greeting and Profile Picture -->
     <div class="flex items-center">
         <span class="text-white mr-4">Hello, <?= $userName ?></span>
-        <a href="../user_profile_management/view_profile.php">
+        <a href="../index1.php">
             <img src="<?= $profilePic ?>" alt="Profile Picture" class="h-10 w-10 rounded-full object-cover border-2 border-white">
         </a>
     </div>
