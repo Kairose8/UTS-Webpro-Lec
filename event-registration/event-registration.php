@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cancel'])) {
             </div>
             <div class="flex justify-between mt-8">
                 <!-- Back Button -->
-                <form action="../event-browsing/event-browsing.php" method="GET">
+                <form action="../index1.php" method="GET">
                     <button type="submit" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
                         Back to Event Browsing
                     </button>
