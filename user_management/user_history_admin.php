@@ -86,13 +86,13 @@ $event = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 To Browse Events
             </button>
         </form>
-
-        <form action="../user_profile_management/view_profile.php" method="GET">
-            <input type="hidden" name="id_user" value="<?= htmlspecialchars($profile['id_user']) ?>">
-            <button type="submit" class="ml-5 bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
-                To Profile
+        <form action="view_users.php" method="GET">
+            <button type="submit" class="mr-5 bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
+                To User Management
             </button>
         </form>
+
+       
     </div>
 
     <script>

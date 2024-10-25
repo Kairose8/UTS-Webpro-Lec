@@ -85,7 +85,7 @@ $event = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
 
                 <div class="text-right mt-8">
-                    <a href="../user_management/user_history.php?id_user=<?= htmlspecialchars($profile['id_user'])?>" 
+                    <a href="user_history.php?id_user=<?= htmlspecialchars($profile['id_user'])?>" 
                     class="inline-block bg-slate-800 text-white font-semibold py-2 px-6 rounded-lg shadow-lg hover:bg-slate-700 transition-all duration-300">
                     More Detail
                     </a>

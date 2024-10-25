@@ -45,7 +45,7 @@ $stmt->execute();
                                 class="w-16 h-16 rounded-full object-cover"/>
                         </td>
                         <td class="py-4 px-6">
-                            <a href="user_history.php?id_user=<?= htmlspecialchars($peserta['id_user'])?>" 
+                            <a href="user_history_admin.php?id_user=<?= htmlspecialchars($peserta['id_user'])?>" 
                                class="text-blue-500 hover:underline mr-4">
                                 View History
                             </a>
