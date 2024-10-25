@@ -3,6 +3,16 @@ include '../db_conn.php'; // Database connection
 include '../navbar/navbar-admin.php';
 
 session_start();
+$admin = $_SESSION['admin'];
+
+if ($admin) {
+    // Fetch user details from the database
+    $stmt = $conn->prepare("SELECT * FROM admin WHERE username = :username");
+    $stmt->execute(['username' => $admin]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+}else{
+    header('location: ../index1.php');
+}
 // Fetch locations from the database for the location dropdown filter
 $stmt = $conn->prepare("SELECT DISTINCT lokasi FROM event");
 $stmt->execute();
