@@ -28,7 +28,7 @@ if ($isLoggedIn) {
         <?php if ($isLoggedIn && $user): ?>
             <a href="./user_profile_management/view_profile.php?id_user=<?= htmlspecialchars($id_user) ?>" class="flex items-center"">
                 <span>Hello, <?= htmlspecialchars($user['nama']) ?></span>
-                <img src="<?= htmlspecialchars(ltrim($user['profile_pic'], './')) ?>" alt="Profile Picture" class="w-10 h-10 rounded-full ml-5">
+                <img src="./uploads/profile_photo/<?= htmlspecialchars(ltrim($user['profile_pic'], './')) ?>" alt="Profile Picture" class="w-10 h-10 rounded-full ml-5">
 
             </a>
 
