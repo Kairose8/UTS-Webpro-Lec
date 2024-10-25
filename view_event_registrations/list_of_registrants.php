@@ -12,7 +12,7 @@ $sql = "SELECT user.id_user, user.nama, user.email, user.profile_pic,
 
 $stmt = $conn->prepare($sql);
 $stmt->execute([$event]);
-$data_event = $stmt->fetch(PDO::FETCH_ASSOC);
+$data_event = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 ?>
 
 <!DOCTYPE html>
@@ -26,9 +26,10 @@ $data_event = $stmt->fetch(PDO::FETCH_ASSOC);
 <body class="bg-gray-100">
     <div class="container mx-auto p-10">
         <h1 class="text-4xl font-bold text-center mb-1 ml-3">List of Registrants</h1>
-        <p class="text-2xl text-center mb-8 mt-6"><?= htmlspecialchars($data_event['nama_event'])?></p>
+        <p class="text-2xl text-center mb-8 mt-6"><?= htmlspecialchars($data_event['nama_event'] ?? 'No participants yet')?></p>
 
         <div class="overflow-x-auto pb-10 flex justify-center items-center">
+            <?php if (!is_null($data_event)): ?>
             <table class="w-9/12 max-w-full text-center bg-white shadow-md rounded-lg overflow-hidden">
                 <thead>
                     <tr class="bg-gray-800 text-center text-white">
@@ -55,14 +56,18 @@ $data_event = $stmt->fetch(PDO::FETCH_ASSOC);
                     <?php endwhile; ?>
                 </tbody>
             </table>
+            <?php endif; ?> 
         </div>
+                
+        <?php if (!is_null($data_event)): ?>
+            <div class="flex justify-center content-center items-center mt-5">
+                <a href="generate_excel.php?id_event=<?= htmlspecialchars($data_event['id_event'])?>" 
+                class="bg-slate-800 hover:bg-slate-700 text-xl text-white font-bold py-2 px-4 rounded-lg shadow-md">
+                Download .xlxs File
+                </a>
+            </div>
+        <?php endif ?>
 
-        <div class="flex justify-center content-center items-center mt-5">
-            <a href="generate_excel.php?id_event=<?= htmlspecialchars($data_event['id_event'])?>" 
-               class="bg-slate-800 hover:bg-slate-700 text-xl text-white font-bold py-2 px-4 rounded-lg shadow-md">
-               Download .xlxs File
-            </a>
-        </div>
         <div class="flex justify-center content-center items-center mt-5">
             <form action="../admin-dashboard/admin-dashboard-index.php" method="GET">
                 <button type="submit"

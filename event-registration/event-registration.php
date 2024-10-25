@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cancel'])) {
     $updateCapacity->execute(['id_event' => $id_event]);
 
     $_SESSION['message'] = 'You have cancelled your registration.';
-    header("Location: event-register.php?id_event=" . urlencode($id_event));
+    header("Location: ./event-registration.php?id_event=" . urlencode($id_event));
     exit();
 }
 ?>
