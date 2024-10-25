@@ -2,6 +2,7 @@
 include '../db_conn.php'; // Database connection
 include '../navbar/navbar-admin.php';
 
+session_start();
 // Fetch locations from the database for the location dropdown filter
 $stmt = $conn->prepare("SELECT DISTINCT lokasi FROM event");
 $stmt->execute();

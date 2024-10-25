@@ -1,14 +1,8 @@
 <?php
-session_start();
 include './db_conn.php'; 
 
 include 'navbar/navbar-user.php';
-// if (!isset($_SESSION['user_id'])) {
-//     include 'navbar/navbar_guest.php'; // Optional: a guest navbar
-// }else{
-//     include 'navbar/navbar_user.php'; // User navbar
 
-// }
 
 $stmt = $conn->prepare("SELECT DISTINCT lokasi FROM event");
 $stmt->execute();
