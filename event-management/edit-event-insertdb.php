@@ -33,7 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $banner_name = sanitize_input($_FILES['event_banner']['name']);
         $banner_tmp = $_FILES['event_banner']['tmp_name'];
-        $upload_dir = '../uploads/' . basename($banner_name);
+        $upload_dir = '../uploads/banner/' . basename($banner_name);
+        $upload_banner = basename($banner_name);
 
         // Move the uploaded file and update event with new banner
         if (move_uploaded_file($banner_tmp, $upload_dir)) {
@@ -45,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'description' => $event_description,
                 'capacity' => $event_capacity,
                 'status' => $event_status,
-                'banner' => $upload_dir,
+                'banner' => $upload_banner,
                 'id_event' => $id_event
             ]);
         } else {

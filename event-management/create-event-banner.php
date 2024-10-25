@@ -2,7 +2,7 @@
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['event_banner'])) {
-    $target_dir = "../uploads/";
+    $target_dir = "../uploads/banner/";
 
     // Sanitize the file name
     $file_name = basename($_FILES["event_banner"]["name"]);
@@ -45,11 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['event_banner'])) {
         echo "Sorry, your file was not uploaded.";
     } else {
         // Rename the file to avoid conflicts (timestamp + sanitized file name)
-        $new_file_name = $target_dir . time() . "_" . $file_name;
+        $new_file_name = time() . "_" . $file_name;
+        $final_path = $target_dir . $new_file_name;
 
         // Move the uploaded file to the uploads directory
-        if (move_uploaded_file($_FILES["event_banner"]["tmp_name"], $new_file_name)) {
-            // Store sanitized file path in session
+        if (move_uploaded_file($_FILES["event_banner"]["tmp_name"], $final_path)) {
+            // Store only the file name in session (to save in the database later)
             $_SESSION['event_banner'] = htmlspecialchars($new_file_name, ENT_QUOTES, 'UTF-8');
 
             // Redirect to the review page

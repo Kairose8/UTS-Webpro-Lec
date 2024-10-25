@@ -17,8 +17,6 @@ $stmt->execute([
     ':banner' => htmlspecialchars($_SESSION['event_banner'])
 ]);
 
-session_unset();
-
-header('Location: create-event-success.php');
+header('Location: ../admin-dashboard/admin-dashboard-index.php');
 exit();
 ?>

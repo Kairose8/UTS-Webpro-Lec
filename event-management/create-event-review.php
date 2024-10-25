@@ -54,7 +54,7 @@ function sanitize_output($data) {
         <!-- Event Banner -->
         <div class="mt-6">
             <h2 class="text-xl font-bold mb-2">Event Banner</h2>
-            <img src="<?php echo sanitize_output($_SESSION['event_banner']); ?>" alt="Event Banner" class="max-w-md border rounded-lg shadow-md">
+            <img src="<?php echo '../uploads/banner/' . sanitize_output($_SESSION['event_banner']); ?>" alt="Event Banner" class="max-w-md border rounded-lg shadow-md">
         </div>
 
         <!-- Buttons -->

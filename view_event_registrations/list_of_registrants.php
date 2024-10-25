@@ -3,16 +3,20 @@ include '../db_conn.php';
 
 $event = $_GET['id_event'];
 
+// Fetch data for the event and its registrants
 $sql = "SELECT user.id_user, user.nama, user.email, user.profile_pic,
         event.id_event, event.nama_event
-		FROM user
+        FROM user
         LEFT JOIN daftar ON user.id_user = daftar.id_user
         LEFT JOIN event ON daftar.id_event = event.id_event
         WHERE event.id_event = ?;";
 
 $stmt = $conn->prepare($sql);
 $stmt->execute([$event]);
-$data_event = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+$registrants = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Check if there are any registrants and event data
+$data_event = !empty($registrants) ? $registrants[0] : null;
 ?>
 
 <!DOCTYPE html>
@@ -40,33 +44,35 @@ $data_event = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($peserta = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
+                    <?php foreach ($registrants as $peserta): ?>
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                         <td class="py-4 px-6"><?= htmlspecialchars($peserta['id_user'])?></td>
                         <td class="py-4 px-6"><?= htmlspecialchars($peserta['nama'])?></td>
                         <td class="py-4 pl-6"><?= htmlspecialchars($peserta['email'])?></td>
                         <td class="py-4 px-6">
                             <div class="flex justify-center items-center">
-                                <img src="<?= htmlspecialchars($peserta['profile_pic']) ?>" 
-                                    alt="Profile picture of <?= htmlspecialchars($peserta['nama']) ?>" 
-                                    class="w-16 h-16 rounded-full object-cover" />
+                                <img src="../uploads/profile_photo/<?= htmlspecialchars($peserta['profile_pic']) ?>" 
+                                     alt="Profile picture of <?= htmlspecialchars($peserta['nama']) ?>" 
+                                     class="w-16 h-16 rounded-full object-cover" />
                             </div>
                         </td>
                     </tr>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
-            <?php endif; ?> 
+            <?php else: ?>
+                <p class="text-center">No registrants found for this event.</p>
+            <?php endif; ?>
         </div>
                 
         <?php if (!is_null($data_event)): ?>
             <div class="flex justify-center content-center items-center mt-5">
                 <a href="generate_excel.php?id_event=<?= htmlspecialchars($data_event['id_event'])?>" 
-                class="bg-slate-800 hover:bg-slate-700 text-xl text-white font-bold py-2 px-4 rounded-lg shadow-md">
-                Download .xlxs File
+                   class="bg-slate-800 hover:bg-slate-700 text-xl text-white font-bold py-2 px-4 rounded-lg shadow-md">
+                   Download .xlsx File
                 </a>
             </div>
-        <?php endif ?>
+        <?php endif; ?>
 
         <div class="flex justify-center content-center items-center mt-5">
             <form action="../admin-dashboard/admin-dashboard-index.php" method="GET">

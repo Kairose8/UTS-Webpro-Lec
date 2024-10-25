@@ -272,7 +272,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
             <?php foreach ($upcomingEvents as $event): ?>
                 <div class="bg-white shadow p-4 rounded relative group">
                     <a href="./admin-dashboard-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="<?= $event['status'] == 'Closed' ? 'opacity-50' : '' ?>">
-                        <img src="<?= htmlspecialchars($event['banner']) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
+                        <img src="../uploads/banner/<?= htmlspecialchars($event['banner']) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
                         <h3 class="text-xl font-bold"><?= htmlspecialchars($event['nama_event']) ?></h3>
                         <p><?= htmlspecialchars($event['tanggal']) ?></p>
                         <p><?= htmlspecialchars($event['lokasi']) ?></p>
@@ -291,7 +291,7 @@ $pastEvents = $pastStmt->fetchAll(PDO::FETCH_ASSOC);
             <?php foreach ($pastEvents as $event): ?>
                 <div class="bg-white shadow p-4 rounded relative group">
                     <a href="./admin-dashboard-event.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="opacity-50">
-                        <img src="<?= htmlspecialchars($event['banner']) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
+                        <img src="../uploads/banner/<?= htmlspecialchars($event['banner']) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
                         <h3 class="text-xl font-bold"><?= htmlspecialchars($event['nama_event']) ?></h3>
                         <p><?= htmlspecialchars($event['tanggal']) ?></p>
                         <p><?= htmlspecialchars($event['lokasi']) ?></p>
