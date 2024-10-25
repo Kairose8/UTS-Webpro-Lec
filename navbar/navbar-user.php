@@ -30,11 +30,11 @@ if ($isLoggedIn) {
             <a href="../user_profile_management/view_profile.php?id_user=<?= htmlspecialchars($id_user) ?>">
                 <img src="<?= htmlspecialchars($user['profile_pic']) ?>" alt="Profile Picture" class="w-10 h-10 rounded-full ml-4">
             </a>
-            <a href="../login/logout_process.php" class="ml-5 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+            <a href="./login/logout_process.php" class="ml-5 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
                 Logout
             </a>
         <?php else: ?>
-            <a href="../login/login.php" class="ml-5 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+            <a href="./login/login.php" class="ml-5 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                 Login
             </a>
         <?php endif; ?>
