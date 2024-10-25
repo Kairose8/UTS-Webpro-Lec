@@ -33,7 +33,7 @@ $profile = $stmt->fetch(PDO::FETCH_ASSOC);
         }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-14">
     <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full relative">
         <a href="view_profile.php?id_user=<?= htmlspecialchars($profile['id_user']) ?>" 
         class="absolute top-4 right-4 text-gray-700 hover:text-gray-800 transition duration-300">
@@ -69,8 +69,16 @@ $profile = $stmt->fetch(PDO::FETCH_ASSOC);
                 <input type="email" name="email" value="<?= htmlspecialchars($profile['email']) ?>" required class="border border-gray-300 p-2 w-full rounded" />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700">Password:</label>
-                <input type="password" name="password" placeholder="****" required class="border border-gray-300 p-2 w-full rounded" />
+                <label class="block text-gray-700">Favorite Thing:</label>
+                <input type="text" name="favorite_thing" value="<?= htmlspecialchars($profile['favorite_thing'] ?? '') ?>" class="border border-gray-300 p-2 w-full rounded" />
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">New Password:</label>
+                <input type="password" name="password" placeholder="****" class="border border-gray-300 p-2 w-full rounded" />
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Confirm Password:</label>
+                <input type="password" name="confirm_password" placeholder="****" class="border border-gray-300 p-2 w-full rounded" />
             </div>
             <button type="submit" class="bg-slate-800 text-white font-semibold py-2 px-4 rounded-lg shadow hover:bg-slate-700 transition duration-300">Save Changes</button>
         </form>

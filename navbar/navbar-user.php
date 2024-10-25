@@ -26,11 +26,12 @@ if ($isLoggedIn) {
     
     <div class="flex items-center">
         <?php if ($isLoggedIn && $user): ?>
-            <span>Hello, <?= htmlspecialchars($user['nama']) ?></span>
-            <a href="./user_profile_management/view_profile.php?id_user=<?= htmlspecialchars($id_user) ?>" class="ml-5">
-                <div class="w-10 h-10 rounded-full overflow-hidden">
-                    <img src="./uploads/profile_photo/<?= htmlspecialchars(ltrim($user['profile_pic'], './')) ?>" alt="Profile Picture" class="w-full h-full object-cover">
-                </div>
+<<<<<<< HEAD
+=======
+            <a href="./user_profile_management/view_profile.php?id_user=<?= htmlspecialchars($id_user) ?>" class="flex items-center"">
+                <span>Hello, <?= htmlspecialchars($user['nama']) ?></span>
+                <img src="<?= htmlspecialchars(ltrim($user['profile_pic'], './')) ?>" alt="Profile Picture" class="w-10 h-10 rounded-full ml-5">
+>>>>>>> 58667bf4203b1e321e1e0547fee3dfdc9ec65109
             </a>
 
             <a href="./login/logout_process.php" class="ml-5 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">

@@ -1274,6 +1274,10 @@ video {
   padding: 1.25rem;
 }
 
+.p-14 {
+  padding: 3.5rem;
+}
+
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
