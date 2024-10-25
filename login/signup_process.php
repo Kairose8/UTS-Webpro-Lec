@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $favorite = $_POST['favorite'];
 
     // Check if a profile picture was uploaded
-    $profilePic = 'assets/default-profile-picture.jpg'; // Default profile picture
+    $profilePic = '../assets/default-profile-picture.jpg'; // Default profile picture
     if (isset($_FILES['profilepic']) && $_FILES['profilepic']['error'] == UPLOAD_ERR_OK) {
         $fileTmpPath = $_FILES['profilepic']['tmp_name'];
         $fileName = $_FILES['profilepic']['name'];

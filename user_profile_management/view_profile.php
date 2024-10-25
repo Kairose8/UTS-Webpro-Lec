@@ -95,7 +95,7 @@ $event = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
     
     <div class="flex justify-center mb-6 -mt-32 text-xl">
-        <form action="../index1.php" method="GET">
+        <form action="../index.php" method="GET">
             <button type="submit" class="mr-5 bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
                 To Browse Events
             </button>

@@ -116,7 +116,7 @@ $upcomingEvents = $upcomingStmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Main Content -->
     <div id="main-content" class="transition-all duration-300 ml-0 pl-0">
         <button id="toggle-sidebar" onclick="toggleSidebar()" class="top-5 left-4 z-30 absolute">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg class="w-6 h-6" fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>
         </button>
@@ -138,7 +138,7 @@ $upcomingEvents = $upcomingStmt->fetchAll(PDO::FETCH_ASSOC);
             <?php if (count($upcomingEvents) > 0): ?>
                 <?php foreach ($upcomingEvents as $event): ?>
                     <a href="./event-registration/event-registration.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-white shadow p-4 rounded relative group hover:bg-gray-100 transition">
-                        <img src="<?= htmlspecialchars($event['banner']) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
+                        <img src="<?= htmlspecialchars(ltrim($event['banner'], './')) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
                         <h3 class="text-xl font-bold"><?= htmlspecialchars($event['nama_event']) ?></h3>
                         <p><?= htmlspecialchars($event['tanggal']) ?></p>
                         <p><?= htmlspecialchars($event['lokasi']) ?></p>
@@ -162,7 +162,7 @@ $upcomingEvents = $upcomingStmt->fetchAll(PDO::FETCH_ASSOC);
             const startDate = document.getElementById('start-date').value;
             const endDate = document.getElementById('end-date').value;
             const searchQuery = document.getElementById('search').value;
-            let url = 'index1.php?';
+            let url = 'index.php?';
             if (locationFilter) {
                 url += 'location=' + encodeURIComponent(locationFilter) + '&';
             }
@@ -178,7 +178,7 @@ $upcomingEvents = $upcomingStmt->fetchAll(PDO::FETCH_ASSOC);
             window.location.href = url;
         }
         function resetFilters() {
-            window.location.href = 'index1.php';
+            window.location.href = 'index.php';
         }
     </script>
 </body>

@@ -17,6 +17,9 @@
             <span class="ml-2 text-white font-bold text-2xl">Eventure</span>
         </a>
     </div>
+    <div>
+        <h1 class="text-2xl font-bold ml-7 text-white">Admin Dashboard</h1>
+    </div>
 
     <!-- Right side: Admin Greeting -->
     <div class="text-white text-2xl">
