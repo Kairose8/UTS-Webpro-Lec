@@ -39,14 +39,14 @@ if (isset($_SESSION['id_user'])) {
                 <button type="submit" class="bg-indigo-900 hover:bg-indigo-800 w-28 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">Login</button>
             </div>
         </form>
-        <div class="flex justify-center text-lg -mt-3">
+        <div class="flex justify-center text-lg mt-5">
             <a href="signup.php" class="text-indigo-900 hover:cursor-pointer hover:text-blue-700 pr-2">Daftar di sini</a>
             <a href="forget_password.php" class="text-indigo-900 hover:cursor-pointer hover:text-blue-700">| Lupa Password</a>
         </div>
         <div class="flex justify-center mt-6">
             <form action="../index.php" method="GET">
                 <button type="submit"
-                        class="bg-slate-800 text-white px-6 py-2 rounded-lg hover:bg-slate-500 transition duration-300">
+                        class="bg-slate-800 text-white px-4 py-1 rounded-lg hover:bg-slate-500 transition duration-300">
                     Browse Events as Guest
                 </button>
             </form>

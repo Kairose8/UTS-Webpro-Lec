@@ -9,7 +9,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
     $favorite = $_POST['favorite'];
+
+    // Check if passwords match
+    if ($password !== $confirm_password) {
+        $_SESSION['error_message'] = "Passwords do not match!";
+        header("Location: signup.php");
+        exit();
+    }
 
     // Check if a profile picture was uploaded
     $profilePic = '../assets/default-profile-picture.jpg'; // Default profile picture
