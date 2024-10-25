@@ -17,7 +17,7 @@ $user = $stmt->fetch();
 
 if ($user) {
     if ($password === $user['password']) {
-        $_SESSION['username'] = $user['username'];
+        $_SESSION['admin'] = $user['username'];
         header("Location: ../admin-dashboard/admin-dashboard-index.php");
         exit;
     } else {
