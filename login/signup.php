@@ -44,8 +44,8 @@ session_start(); // Start the session
             </div>
         </form>
         <div class="flex justify-center text-lg">
-            <a href="login.php" class="text-indigo-900 hover:cursor-pointer pr-2">Login di sini</a>
-            <a href="forget_password.php" class="text-indigo-900 hover:cursor-pointer">| Ganti password</a>
+            <a href="login.php" class="text-indigo-900 hover:cursor-pointer hover:text-blue-700 pr-2">Login di sini</a>
+            <a href="forget_password.php" class="text-indigo-900 hover:cursor-pointer hover:text-blue-700">| Ganti password</a>
         </div>
     </main>
 </body>
