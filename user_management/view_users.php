@@ -40,7 +40,7 @@ $stmt->execute();
                         <td class="py-4 px-6"><?= htmlspecialchars($peserta['nama'])?></td>
                         <td class="py-4 px-6"><?= htmlspecialchars($peserta['email'])?></td>
                         <td class="py-4 px-6">
-                        <img src="<?= htmlspecialchars($peserta['profile_pic']) ?>" 
+                        <img src="../uploads/profile_photo/<?= htmlspecialchars($peserta['profile_pic']) ?>" 
                                 alt="Profile picture of <?= htmlspecialchars($peserta['nama']) ?>" 
                                 class="w-16 h-16 rounded-full object-cover"/>
                         </td>

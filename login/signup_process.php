@@ -1,8 +1,7 @@
 <?php
-// Include the database connection file using the correct relative path
-include '../db_conn.php'; // Adjusted path to point to db_conn.php
+include '../db_conn.php';
 
-session_start(); // Start the session
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form data
@@ -11,8 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
     $favorite = $_POST['favorite'];
 
+    // Default profile picture
+    $profilePic = 'default/default-profile-picture.jpg';
+
     // Check if a profile picture was uploaded
-    $profilePic = '../assets/default-profile-picture.jpg'; // Default profile picture
     if (isset($_FILES['profilepic']) && $_FILES['profilepic']['error'] == UPLOAD_ERR_OK) {
         $fileTmpPath = $_FILES['profilepic']['tmp_name'];
         $fileName = $_FILES['profilepic']['name'];
@@ -21,16 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $fileNameCmps = explode(".", $fileName);
         $fileExtension = strtolower(end($fileNameCmps));
 
-        // Specify the allowed file types
+        // Specify allowed file types
         $allowedFileTypes = array('jpg', 'gif', 'png', 'jpeg');
 
         if (in_array($fileExtension, $allowedFileTypes) && $fileSize < 5000000) { // Limit to 5MB
-            $uploadFileDir = '../uploads/'; // Adjust this directory to be outside the current folder
+            $uploadFileDir = '../uploads/profile_photo/';
             $dest_path = $uploadFileDir . $fileName;
 
             // Move the file to the upload directory
             if (move_uploaded_file($fileTmpPath, $dest_path)) {
-                $profilePic = $dest_path; // Use uploaded picture
+                $profilePic = $fileName; // Save only the file name
             } else {
                 echo 'There was an error moving the uploaded file.';
             }
@@ -53,9 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Execute the statement
         if ($stmt->execute()) {
-            // Set the success message in session
             $_SESSION['success_message'] = "Registration successful!";
-            // Redirect back to the signup page (optional)
             header("Location: signup.php");
             exit();
         } else {
@@ -65,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Database error: " . $e->getMessage();
     }
 
-    // Close the database connection (optional, as it will close at the end of the script)
-    $conn = null; 
+    // Close the database connection
+    $conn = null;
 }
 ?>

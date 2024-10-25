@@ -9,6 +9,7 @@ session_start(); // Start the session
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../style/background.css"> 
 </head>
 <body class="bg-gray-100 flex items-center justify-center h-screen">
     <a href="admin_login.php" class="absolute top-5 right-5 bg-indigo-900 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded-md">

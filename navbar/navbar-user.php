@@ -28,8 +28,11 @@ if ($isLoggedIn) {
         <?php if ($isLoggedIn && $user): ?>
             <span>Hello, <?= htmlspecialchars($user['nama']) ?></span>
             <a href="./user_profile_management/view_profile.php?id_user=<?= htmlspecialchars($id_user) ?>" class="ml-5">
-                <img src="<?= htmlspecialchars(ltrim($user['profile_pic'], './')) ?>" alt="Profile Picture" class="w-10 h-10 rounded-full ml-4">
+                <div class="w-10 h-10 rounded-full overflow-hidden">
+                    <img src="./uploads/profile_photo/<?= htmlspecialchars(ltrim($user['profile_pic'], './')) ?>" alt="Profile Picture" class="w-full h-full object-cover">
+                </div>
             </a>
+
             <a href="./login/logout_process.php" class="ml-5 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
                 Logout
             </a>

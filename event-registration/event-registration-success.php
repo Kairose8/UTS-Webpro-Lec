@@ -19,10 +19,10 @@
         </div>
 
         <!-- Success Title -->
-        <h1 class="text-2xl font-bold text-green-600 mb-4">Event Created Successfully!</h1>
+        <h1 class="text-2xl font-bold text-green-600 mb-4">Registration Successful! </h1>
 
         <!-- Success Message -->
-        <p class="text-gray-600 mb-6">Your event has been successfully added to the system.</p>
+        <p class="text-gray-600 mb-6">You have been successfully registered to the event.</p>
 
         <!-- Back to Dashboard Button -->
         <form action="../index.php" method="GET">

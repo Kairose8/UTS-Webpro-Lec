@@ -124,7 +124,7 @@ $upcomingEvents = $upcomingStmt->fetchAll(PDO::FETCH_ASSOC);
 
         <!-- Top Banner -->
         <div class="w-full h-96 mb-8">
-            <img src="./assets/banner-abstract5.jpg" alt="Event Banner" class="w-full h-full object-cover">
+            <img src="./uploads/banner/default/banner-abstract5.jpg" alt="Event Banner" class="w-full h-full object-cover">
         </div>
         
         <!-- Search Bar (Centered in Main Content) -->
@@ -138,7 +138,7 @@ $upcomingEvents = $upcomingStmt->fetchAll(PDO::FETCH_ASSOC);
             <?php if (count($upcomingEvents) > 0): ?>
                 <?php foreach ($upcomingEvents as $event): ?>
                     <a href="./event-registration/event-registration.php?id_event=<?= htmlspecialchars($event['id_event']) ?>" class="bg-white shadow p-4 rounded relative group hover:bg-gray-100 transition">
-                        <img src="<?= htmlspecialchars(ltrim($event['banner'], './')) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
+                        <img src="./uploads/banner/<?= htmlspecialchars(ltrim($event['banner'], './')) ?>" alt="Event Banner" class="w-full h-40 object-cover mb-4">
                         <h3 class="text-xl font-bold"><?= htmlspecialchars($event['nama_event']) ?></h3>
                         <p><?= htmlspecialchars($event['tanggal']) ?></p>
                         <p><?= htmlspecialchars($event['lokasi']) ?></p>

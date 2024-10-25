@@ -48,7 +48,7 @@ $event = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             <!-- Profile Photo Section -->
             <h2 class="text-xl font-semibold mb-2 text-gray-700">Profile Photo</h2>
-            <img src="<?= htmlspecialchars($profile['profile_pic'])?>" 
+            <img src="../uploads/profile_photo/<?= htmlspecialchars($profile['profile_pic'])?>" 
                  alt="Your Profile Photo" 
                  class="rounded-full w-64 h-64 object-cover mb-6 mx-auto">
 

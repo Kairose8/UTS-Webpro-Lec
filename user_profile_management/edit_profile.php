@@ -36,7 +36,7 @@ $profile = $stmt->fetch(PDO::FETCH_ASSOC);
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full relative">
         <a href="view_profile.php?id_user=<?= htmlspecialchars($profile['id_user']) ?>" 
-        class="absolute top-4 right-4 text-gray-600 hover:text-gray-800 transition duration-300">
+        class="absolute top-4 right-4 text-gray-700 hover:text-gray-800 transition duration-300">
             ✖ 
         </a>
         <h1 class="text-3xl font-bold mb-4 text-gray-800">Edit Account Information</h1>
@@ -45,7 +45,7 @@ $profile = $stmt->fetch(PDO::FETCH_ASSOC);
         <!-- Profile Photo Section -->
         <h2 class="text-xl font-semibold mb-2 text-gray-700">Profile Photo</h2>
         <div class="profile-pic-container">
-        <img src="<?= htmlspecialchars($profile['profile_pic']) ?>"  
+        <img src="../uploads/profile_photo/<?= htmlspecialchars($profile['profile_pic']) ?>"  
                 alt="Your Profile Photo" 
                 class="rounded-full w-64 h-64 object-cover mx-auto">
             <div class="camera-icon" onclick="document.getElementById('photo-upload').click()">

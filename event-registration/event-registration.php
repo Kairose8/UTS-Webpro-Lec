@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cancel'])) {
     $updateCapacity->execute(['id_event' => $id_event]);
 
     $_SESSION['message'] = 'You have cancelled your registration.';
-    header("Location: event-register.php?id_event=" . urlencode($id_event));
+    header("Location: event-registration.php?id_event=" . urlencode($id_event));
     exit();
 }
 ?>
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cancel'])) {
         <h1 class="text-2xl font-bold text-slate-800 mb-6 text-center">Event Registration</h1>
 
         <div class="h-32 w-full">
-            <img src="<?= htmlspecialchars($event['banner'], ENT_QUOTES, 'UTF-8') ?>" alt="Event Banner" class="w-full h-full object-cover">
+            <img src="../uploads/banner/<?= htmlspecialchars($event['banner'], ENT_QUOTES, 'UTF-8') ?>" alt="Event Banner" class="w-full h-full object-cover">
         </div>
 
         <!-- Event Information -->

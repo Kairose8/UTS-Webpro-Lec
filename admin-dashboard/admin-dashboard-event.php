@@ -29,7 +29,7 @@ if (!$event) {
         <h1 class="text-2xl font-bold text-slate-800 mb-6 text-center">Event Details</h1>
         
     <div class="h-32 w-full">
-        <img src="<?= htmlspecialchars($event['banner']) ?>" alt="Event Banner" 
+        <img src="../uploads/banner/<?= htmlspecialchars($event['banner']) ?>" alt="Event Banner" 
              class="w-full h-full object-cover">
     </div>
 
